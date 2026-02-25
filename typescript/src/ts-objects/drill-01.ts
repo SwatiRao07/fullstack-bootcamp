@@ -5,7 +5,7 @@ type Person = {
 
 const person1: Person = {
   name: "Monu",
-  age: 20
+  age: 20,
 };
 
 console.log(person1);
@@ -21,6 +21,7 @@ const person3: PersonWithId = {
   name: "Sonu",
   age: 65
 };
+
 
 person3.name="neha"
 

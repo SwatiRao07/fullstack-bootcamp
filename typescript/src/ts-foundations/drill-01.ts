@@ -14,7 +14,7 @@ let info: unknown = "hello";
 
 info = 42;
 info = true;
-// value.toUpperCase(); 
+// info.toUpperCase(); 
 
 if (typeof info === "string") {
   console.log(info.toUpperCase()); 

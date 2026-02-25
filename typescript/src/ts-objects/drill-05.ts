@@ -11,8 +11,9 @@ const partialPerson: Partial<Person11> = {
 
 console.log(partialPerson);
 
-const pickedPerson: Pick<Person11, "name"> = {
-  name: "rishabh"
+const pickedPerson: Pick<Person11, "name"| "age"> = {
+  name: "rishabh",
+  age: 56
 };
 
 console.log(pickedPerson);
