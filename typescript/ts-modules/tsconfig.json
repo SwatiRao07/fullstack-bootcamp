@@ -4,6 +4,7 @@
     "moduleResolution": "Bundler",
     "target": "ES2022",
     "strict": true,
+    "types": ["node"],
     "baseUrl": ".",
     "paths": { "@shared/*": ["src/shared/*"] }
   }
