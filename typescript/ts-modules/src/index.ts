@@ -1,9 +1,8 @@
 import { add, now, capitalize, generateId } from "@shared/index";
 import { readPackage } from "./server/file.js";
 
-console.log("--- TS Modules Drill ---");
 console.log("Current Time (from @shared/time):", now());
-console.log("Add Calculation (10 + 5):", add(10, 5));
+console.log("Add Calculation:", add(10, 5));
 console.log("Capitalize String:", capitalize("hello world"));
 console.log("Generated UUID:", generateId());
 
