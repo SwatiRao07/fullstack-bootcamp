@@ -1,18 +1,13 @@
-import { Task, Priority } from './types';
-import { randomUUID } from 'crypto';
+import { TaskManager } from './TaskManager';
+import { TaskCLI } from './cli';
 
-function createTask(title: string, priority: Priority = 'medium'): Task {
-  return {
-    id: randomUUID(),
-    title,
-    completed: false,
-    priority,
-    createdAt: new Date(),
-  };
+async function main() {
+  const manager = new TaskManager([]);
+  const cli = new TaskCLI(manager);
+  await cli.run(process.argv);
 }
 
-const task1 = createTask('Buy groceries', 'high');
-const task2 = createTask('Read TypeScript book');
-
-console.log(task1);
-console.log(task2);
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
