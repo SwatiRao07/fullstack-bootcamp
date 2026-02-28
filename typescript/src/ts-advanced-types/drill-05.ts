@@ -1,10 +1,13 @@
+export {};
+
 type PromiseType<T> = T extends Promise<infer U> ? U : T;
-type x = PromiseType<Promise<string>>; // string
-type y = PromiseType<Promise<number>>; // number
-type z = PromiseType<boolean>;         // boolean
+
+
+type T1 = PromiseType<Promise<string>>; 
+type T2 = PromiseType<Promise<number>>; 
+type T3 = PromiseType<boolean>;         
 
 type Nullable<T> = T | null;
-type Name = Nullable<string>; 
-// string | null
-type NotNullable<T> = T extends null | undefined ? never : T;
-type Clean = NotNullable<string | null | undefined>;
+type NonNullableType<T> = T extends null | undefined ? never : T;
+
+type T4 = NonNullableType<string | null | undefined>; 

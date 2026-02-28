@@ -1,18 +1,12 @@
-type Id = {
-  id: string;
-};
+export {};
 
-type Timestamps = {
-  createdAt: Date;
-  updatedAt: Date;
-};
+type HasId = { id: string };
+type HasTimestamps = { createdAt: Date; updatedAt: Date };
 
-type Entity = Id & Timestamps;
+type Entity = HasId & HasTimestamps;
 
-const user20: Entity = {
+const entity: Entity = {
   id: "123",
   createdAt: new Date(),
-  updatedAt: new Date(),
+  updatedAt: new Date()
 };
-
-console.log(user20)
