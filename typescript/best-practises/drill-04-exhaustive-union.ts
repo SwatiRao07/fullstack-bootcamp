@@ -1,11 +1,10 @@
 type Circle   = { kind: "circle";   radius: number };
 type Square   = { kind: "square";   side: number };
 type Triangle = { kind: "triangle"; base: number; height: number };
-type Polygon  = { kind: "polygon";  sides: number; sideLength: number }; // ← new variant
+type Polygon  = { kind: "polygon";  sides: number; sideLength: number }; 
 
 type Shape = Circle | Square | Triangle | Polygon;
 
-// never helper – if we forget to handle a variant, TypeScript errors here
 function assertNever(x: never): never {
   throw new Error("Unhandled variant: " + JSON.stringify(x));
 }
@@ -17,9 +16,7 @@ function area(shape: Shape): number {
     case "triangle": return 0.5 * shape.base * shape.height;
     case "polygon":  return (shape.sides * shape.sideLength ** 2) / (4 * Math.tan(Math.PI / shape.sides));
     default:         return assertNever(shape);
-   
-    // Without the "polygon" case above, TypeScript would error:
-    // "Argument of type 'Polygon' is not assignable to parameter of type 'never'"
+  
   }
 }
 

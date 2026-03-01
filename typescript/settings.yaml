@@ -8,3 +8,5 @@ server:
 features:
   - auth
   - logging
+isreal:
+  value: true

@@ -15,13 +15,6 @@ program
   .action((name: string, opts: { uppercase: boolean; times: string }) => {
     const count = parseInt(opts.times, 10);
 
-    if (isNaN(count) || count < 1) {
-      console.error(
-        `--times must be a positive integer, received: "${opts.times}"`
-      );
-      process.exit(1);
-    }
-
     let greeting = `Hello, ${name}!`;
 
     if (opts.uppercase) {

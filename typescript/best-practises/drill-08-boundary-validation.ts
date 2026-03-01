@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-// ── Schema ────────────────────────────────────
-
 const UserSchema = z.object({
   name:  z.string().min(1, "name is required"),
   email: z.string().email("invalid email"),
@@ -9,8 +7,6 @@ const UserSchema = z.object({
 });
 
 type UserInput = z.infer<typeof UserSchema>;
-
-// ── Stable error codes ────────────────────────
 
 const ERROR_CODES: Record<string, string> = {
   name:  "USER_NAME_INVALID",
@@ -30,8 +26,6 @@ function parseUser(raw: unknown) {
 
   return { ok: false as const, errors };
 }
-
-// ── Driver ────────────────────────────────────
 
 const valid   = { name: "Aarav", email: "aarav@example.com", role: "admin" };
 const invalid = { name: "",      email: "not-an-email",       role: "superuser" };
