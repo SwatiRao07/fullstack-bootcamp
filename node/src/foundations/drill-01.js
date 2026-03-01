@@ -1,0 +1,10 @@
+console.log("Process ID:", process.pid);
+console.log("Node Version:", process.version);
+console.log("Arguments:", process.argv);
+const args = process.argv.slice(2);
+console.log("User args:", args);
+// process.exit(0); 
+console.log("Current Working Directory:", process.cwd());
+console.log("Environment Variables:");
+console.log(process.env);
+console.log("PATH:", process.env.PATH);
