@@ -9,7 +9,7 @@ async function writeJson() {
 
   await writeFile(
     "data.json",
-    JSON.stringify(data, null, 4) // pretty-print
+    JSON.stringify(data, null, 2)
   );
 
   console.log("JSON written.");
