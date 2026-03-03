@@ -1,0 +1,14 @@
+### Drill 7: Router Organization
+
+# Test User Router List
+GET http://localhost:3000/api/users
+
+###
+
+# Test Single User
+GET http://localhost:3000/api/users/99
+
+###
+
+# Test Post Router
+GET http://localhost:3000/api/posts

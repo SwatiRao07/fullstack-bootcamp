@@ -1,0 +1,33 @@
+### CRUD Implementation: Drill 2
+
+### 1. List all tasks
+GET http://localhost:3001/tasks
+
+### 2. Create a new task
+POST http://localhost:3001/tasks
+Content-Type: application/json
+
+{
+  "title": "Build CRUD API"
+}
+
+### 3. Get single task (Success)
+GET http://localhost:3001/tasks/1
+
+### 4. Get single task (Not Found)
+GET http://localhost:3001/tasks/999
+
+### 5. Update a task (Full Update)
+PUT http://localhost:3001/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Master TypeScript",
+  "completed": true
+}
+
+### 6. Delete a task
+DELETE http://localhost:3001/tasks/2
+
+### 7. Delete non-existent task
+DELETE http://localhost:3001/tasks/999

@@ -1,0 +1,44 @@
+### 200 OK
+
+GET http://localhost:3000/ok
+
+###  201 Created
+
+POST http://localhost:3000/created
+Content-Type: application/json
+
+{
+"name": "test"
+}
+
+###  400 Bad Request
+
+GET http://localhost:3000/bad-request
+
+### 404 Not Found (explicit route)
+
+GET http://localhost:3000/not-found
+
+###  Custom Header
+
+GET http://localhost:3000/custom-header
+
+###  JSON Response
+
+GET http://localhost:3000/json
+
+###  Plain Text Response
+
+GET http://localhost:3000/text
+
+###  Send File
+
+GET http://localhost:3000/file
+
+###  Redirect (default 302)
+
+GET http://localhost:3000/redirect
+
+###  Unknown Route (should return Express default 404)
+
+GET http://localhost:3000/random-route

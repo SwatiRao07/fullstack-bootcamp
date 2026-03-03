@@ -1,0 +1,11 @@
+### Drill 6: Error Handling
+
+# Test Sync Error
+GET http://localhost:3000/sync-error
+
+###
+
+# Test Async Error
+GET http://localhost:3000/async-error
+
+

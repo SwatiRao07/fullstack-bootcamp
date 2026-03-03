@@ -1,0 +1,22 @@
+### API Documentation: Drill 7
+
+### 1. GET OpenAPI Spec JSON
+GET http://localhost:3006/docs/openapi.json
+
+### 2. Request to Swagger UI (This will return HTML)
+GET http://localhost:3006/docs
+
+### 3. GET tasks (Documented endpoint)
+GET http://localhost:3006/tasks
+
+### 4. Create task (Documented POST)
+POST http://localhost:3006/tasks
+Content-Type: application/json
+
+{
+  "title": "Swagger is awesome",
+  "completed": false
+}
+
+### 5. Get non-existent task (Documented 404)
+GET http://localhost:3006/tasks/123

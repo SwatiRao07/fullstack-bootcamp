@@ -1,0 +1,22 @@
+### Structured Logging: Drill 6
+
+### 1. Request to generate info logs
+GET http://localhost:3005/tasks
+
+### 2. Request to generate business event (task_created)
+POST http://localhost:3005/tasks
+Content-Type: application/json
+
+{
+  "title": "Learn Logging"
+}
+
+### 3. Request with custom x-request-id header
+GET http://localhost:3005/tasks
+x-request-id: my-custom-id-999
+
+### 4. Update task (task_updated event)
+PUT http://localhost:3005/tasks/100
+
+### 5. Delete task (task_deleted event)
+DELETE http://localhost:3005/tasks/100

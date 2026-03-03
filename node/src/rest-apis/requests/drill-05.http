@@ -1,0 +1,10 @@
+### Error Handling: Drill 5
+
+### 1. Test 400 Bad Request
+GET http://localhost:3004/400
+
+### 2. Test 404 Not Found
+GET http://localhost:3004/404
+
+### 3. Test 500 Internal Server Error
+GET http://localhost:3004/500

@@ -1,0 +1,19 @@
+### Drill 2: Basic Routing
+
+# Test Path Param
+GET http://localhost:3000/users/123
+
+###
+
+# Test Query Param
+GET http://localhost:3000/search?q=hello
+
+###
+
+# Test Params + Query
+GET http://localhost:3000/users/456/posts?limit=5
+
+###
+
+# Test 404 Wildcard
+GET http://localhost:3000/invalid-path

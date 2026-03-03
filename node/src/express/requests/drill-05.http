@@ -1,0 +1,8 @@
+###
+GET http://localhost:3000/public
+
+###
+GET http://localhost:3000/private
+
+###
+GET http://localhost:3000/order

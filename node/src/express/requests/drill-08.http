@@ -1,0 +1,31 @@
+### Drill 8: Static Files & CORS
+
+# Test Static file access
+GET http://localhost:3000/static/index.html
+
+###
+
+# Test Manual CORS headers
+GET http://localhost:3000/manual-cors
+
+###
+
+# Test Preflight (OPTIONS Request)
+OPTIONS http://localhost:3000/manual-cors
+
+###
+
+# Test Global CORS Middleware (Open)
+GET http://localhost:3000/open-cors
+
+###
+
+# Test Restricted CORS (Matching origin)
+GET http://localhost:3000/restricted-cors
+Origin: http://example.com
+
+###
+
+# Test Restricted CORS (Should block Origin header mismatch)
+GET http://localhost:3000/restricted-cors
+Origin: http://untrusted.com

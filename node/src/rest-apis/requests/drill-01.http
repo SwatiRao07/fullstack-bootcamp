@@ -1,0 +1,31 @@
+### REST Resource Design: Drill 1
+
+### 1. List all tasks
+GET http://localhost:3000/tasks
+
+### 2. Create a new task
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "Learn REST",
+  "completed": false
+}
+
+### 3. Get single task
+GET http://localhost:3000/tasks/1
+
+### 4. Update a task (Full Update)
+PUT http://localhost:3000/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Learn REST",
+  "completed": true
+}
+
+### 5. Delete a task
+DELETE http://localhost:3000/tasks/1
+
+### 6. Get tasks for a specific user
+GET http://localhost:3000/users/123/tasks

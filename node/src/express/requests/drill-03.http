@@ -1,0 +1,28 @@
+### Drill 3: Request Bodies
+
+# Test JSON post
+POST http://localhost:3000/echo
+Content-Type: application/json
+
+{
+    "title": "Hello",
+    "status": "success"
+}
+
+###
+
+# Test Form-data (Urlencoded)
+POST http://localhost:3000/form
+Content-Type: application/x-www-form-urlencoded
+
+name=Swati&role=dev
+
+###
+
+# Test Malformed JSON (Should return 400)
+POST http://localhost:3000/echo
+Content-Type: application/json
+
+{
+    "bad":
+}

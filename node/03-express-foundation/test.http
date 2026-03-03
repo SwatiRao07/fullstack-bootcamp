@@ -1,0 +1,29 @@
+### Noteserver API Testing
+
+# 1. Health Check
+GET http://localhost:3000/health
+
+###
+
+# 2. Server Info
+GET http://localhost:3000/api/info
+
+###
+
+# 3. Echo Body
+POST http://localhost:3000/api/echo
+Content-Type: application/json
+
+{
+    "message": "Hello from Noteserver!",
+    "timestamp": "{{$datetime iso8601}}"
+}
+
+
+###
+
+# 4. Error Handling (404)
+GET http://localhost:3000/api/unknown-route
+
+###
+

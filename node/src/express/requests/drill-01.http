@@ -1,0 +1,9 @@
+### Drill 1: Hello Express
+
+# Test / route
+GET http://localhost:3000/
+
+###
+
+# Test /ping JSON route
+GET http://localhost:3000/ping

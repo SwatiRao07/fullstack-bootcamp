@@ -1,0 +1,19 @@
+### Pagination & Filtering: Drill 4
+
+### 1. Default pagination (Page 1, Limit 5)
+GET http://localhost:3003/tasks
+
+### 2. Specific pagination (Page 2, Limit 10)
+GET http://localhost:3003/tasks?page=2&limit=10
+
+### 3. Filtering by completed status
+GET http://localhost:3003/tasks?completed=true
+
+### 4. Sorting options
+GET http://localhost:3003/tasks?sort=title&order=asc
+
+### 5. Combined: Page 3, Limit 5, completed=false, sort=createdAt, order=desc
+GET http://localhost:3003/tasks?page=3&limit=5&completed=false&sort=createdAt&order=desc
+
+### 6. Invalid query param (validation error)
+GET http://localhost:3003/tasks?limit=abc

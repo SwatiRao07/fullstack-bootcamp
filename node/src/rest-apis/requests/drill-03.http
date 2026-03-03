@@ -1,0 +1,24 @@
+### Input Validation: Drill 3
+
+### 1. Create a valid task
+POST http://localhost:3002/tasks
+Content-Type: application/json
+
+{
+  "title": "Valid task",
+  "completed": false
+}
+
+### 2. Create invalid task (Missing title)
+POST http://localhost:3002/tasks
+Content-Type: application/json
+
+{
+  "completed": false
+}
+
+### 3. GET tasks with valid query params
+GET http://localhost:3002/tasks?completed=false&limit=5
+
+### 4. GET tasks with invalid query params
+GET http://localhost:3002/tasks?completed=maybe&limit=abc
