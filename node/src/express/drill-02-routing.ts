@@ -7,13 +7,11 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Basic Routing Drills (TS)");
 });
 
-// Path parameter
 app.get("/users/:id", (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
   res.json({ userId: id });
 });
 
-// Query parameter
 app.get("/search", (req: Request, res: Response) => {
   const { q } = req.query;
 
@@ -35,7 +33,6 @@ app.get("/users/:id/posts", (req: Request, res: Response) => {
   });
 });
 
-// Catch-all route (404)
 app.use((req: Request, res: Response) => {
   res.status(404).send("404 - Not Found");
 });

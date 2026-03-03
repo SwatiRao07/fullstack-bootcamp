@@ -1,10 +1,8 @@
-### CRUD Implementation: Drill 2
-
 ### 1. List all tasks
-GET http://localhost:3001/tasks
+GET http://localhost:3000/tasks
 
 ### 2. Create a new task
-POST http://localhost:3001/tasks
+POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
@@ -12,13 +10,13 @@ Content-Type: application/json
 }
 
 ### 3. Get single task (Success)
-GET http://localhost:3001/tasks/1
+GET http://localhost:3000/tasks/1
 
 ### 4. Get single task (Not Found)
-GET http://localhost:3001/tasks/999
+GET http://localhost:3000/tasks/999
 
 ### 5. Update a task (Full Update)
-PUT http://localhost:3001/tasks/1
+PUT http://localhost:3000/tasks/1
 Content-Type: application/json
 
 {
@@ -27,7 +25,7 @@ Content-Type: application/json
 }
 
 ### 6. Delete a task
-DELETE http://localhost:3001/tasks/2
+DELETE http://localhost:3000/tasks/2
 
 ### 7. Delete non-existent task
-DELETE http://localhost:3001/tasks/999
+DELETE http://localhost:3000/tasks/999

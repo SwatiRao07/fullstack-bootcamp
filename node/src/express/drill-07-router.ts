@@ -1,9 +1,8 @@
 import express, { Request, Response, NextFunction, Router } from "express";
 
 const app = express();
-const PORT: string | number = process.env.PORT || 3000;
+const PORT= process.env.PORT || 3000;
 
-// Feature 1: User Router (Typed)
 const userRouter: Router = express.Router();
 
 userRouter.use((req: Request, res: Response, next: NextFunction) => {
@@ -12,21 +11,19 @@ userRouter.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 userRouter.get("/", (req: Request, res: Response) => {
-  res.json({ users: ["Alice-TS", "Bob-TS"] });
+  res.json({ users: ["divya", "asha"] });
 });
 
 userRouter.get("/:id", (req: Request<{ id: string }>, res: Response) => {
   res.json({ user: `User ${req.params.id} via TS router` });
 });
 
-// Feature 2: Post Router (Typed)
 const postRouter: Router = express.Router();
 
 postRouter.get("/", (req: Request, res: Response) => {
   res.json({ posts: ["Hello Express TS", "Sub-routers are powerful"] });
 });
 
-// Mounting routers
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 

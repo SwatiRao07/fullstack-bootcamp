@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+const PORT =3000
 const metrics = { total: 0, ok: 0, err: 0, times: {} as any };
 
 app.use((req: any, res: any, next: any) => {
@@ -24,4 +25,6 @@ app.use("/v1", v1);
 app.use("/v2", v2);
 app.get("/metrics", (req, res) => res.json(metrics));
 
-app.listen(3007);
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

@@ -1,7 +1,5 @@
-### Input Validation: Drill 3
-
 ### 1. Create a valid task
-POST http://localhost:3002/tasks
+POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
@@ -10,7 +8,7 @@ Content-Type: application/json
 }
 
 ### 2. Create invalid task (Missing title)
-POST http://localhost:3002/tasks
+POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
@@ -18,7 +16,7 @@ Content-Type: application/json
 }
 
 ### 3. GET tasks with valid query params
-GET http://localhost:3002/tasks?completed=false&limit=5
+GET http://localhost:3000/tasks?completed=false&limit=5
 
 ### 4. GET tasks with invalid query params
-GET http://localhost:3002/tasks?completed=maybe&limit=abc
+GET http://localhost:3000/tasks?completed=maybe&limit=abc

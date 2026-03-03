@@ -2,6 +2,7 @@ import express from "express";
 
 const app = express();
 app.use(express.json());
+const PORT= 3000
 
 let tasks = [{ id: 1, title: "Task 1" }];
 
@@ -29,4 +30,6 @@ app.delete("/tasks/:id", (req: any, res) => {
   res.status(204).send();
 });
 
-app.listen(3001);
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

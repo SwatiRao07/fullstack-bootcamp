@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+const PORT=3000
 const tasks = Array.from({ length: 20 }, (_, i) => ({
   id: i + 1,
   completed: i % 2 === 0,
@@ -30,4 +31,6 @@ app.get("/tasks", (req: any, res) => {
   res.json({ data, metadata: { total: filtered.length, page: p, limit: l } });
 });
 
-app.listen(3003);
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

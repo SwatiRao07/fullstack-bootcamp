@@ -4,6 +4,7 @@ import { v4 } from "uuid";
 
 const logger = pino({ level: "debug", transport: { target: "pino-pretty" } });
 const app = express();
+const PORT=3000
 
 app.use((req: any, res: any, next: any) => {
   req.id = v4();
@@ -23,4 +24,6 @@ app.post("/tasks", (req: any, res) => {
   res.status(201).json({ id: 1 });
 });
 
-app.listen(3005);
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

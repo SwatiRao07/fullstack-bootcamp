@@ -1,17 +1,15 @@
-### API Versioning & Metrics: Drill 8
-
 ### 1. Request to V1
-GET http://localhost:3007/v1/tasks
+GET http://localhost:3000/v1/tasks
 
 ### 2. Request to V2
-GET http://localhost:3007/v2/tasks
+GET http://localhost:3000/v2/tasks
 
-### 3. Generate success metrics (several calls)
-GET http://localhost:3007/v1/tasks
-GET http://localhost:3007/v2/tasks
+### 3. Generate success metrics 
+GET http://localhost:3000/v1/tasks
+GET http://localhost:3000/v2/tasks
 
 ### 4. Generate error metrics
-GET http://localhost:3007/v1/error
+GET http://localhost:3000/v1/error
 
 ### 5. Check metrics endpoint
-GET http://localhost:3007/metrics
+GET http://localhost:3000/metrics

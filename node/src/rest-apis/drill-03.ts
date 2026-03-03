@@ -3,6 +3,7 @@ import { z } from "zod";
 
 const app = express();
 app.use(express.json());
+const PORT= 3000
 
 const taskSchema = z.object({ title: z.string().min(1) });
 const querySchema = z.object({
@@ -29,4 +30,6 @@ app.get("/tasks", validate(querySchema, "query"), (req, res) => {
   res.json({ limitUsed: req.query.limit });
 });
 
-app.listen(3002);
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

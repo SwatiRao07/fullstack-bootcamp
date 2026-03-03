@@ -2,6 +2,7 @@ import express from "express";
 
 const app = express();
 app.use(express.json());
+const PORT=3000
 
 const sendProblem = (res: any, status: number, title: string, detail: string) =>
   res
@@ -23,4 +24,6 @@ app.use((err: any, req: any, res: any, next: any) => {
   sendProblem(res, 500, "Internal Server Error", err.message);
 });
 
-app.listen(3004);
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
