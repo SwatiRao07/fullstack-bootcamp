@@ -4,7 +4,7 @@ import { initDb } from "./db/connection";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   initDb();

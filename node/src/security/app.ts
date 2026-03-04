@@ -8,24 +8,20 @@ import { requireRole } from "./middleware/role";
 
 const app = express();
 
-// Drill 7: Security Middleware
-app.use(helmet()); // Sets various security headers
-app.use(cors({ origin: "http://localhost:3000" })); // Drill 7: CORS allow specific origin
-app.disable("x-powered-by"); // Drill 7: Disable X-Powered-By
+app.use(helmet());
+app.use(cors({ origin: "http://localhost:3000" })); 
+app.disable("x-powered-by");
 
-// Drill 7: Rate Limiting
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 login requests per window
+  max: 5,
   message: { error: "Too many login attempts, please try again later" },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// Drill 7 & 8: Request size limit and consistent formatting
 app.use(express.json({ limit: "1mb" }));
 
-// Logging failed attempts (Drill 8)
 app.use((req, res, next) => {
   const originalSend = res.send;
   res.send = function (body) {
@@ -39,25 +35,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+
 app.use("/auth", loginLimiter, authRoutes);
 
-// Drill 5: Protected /profile route
 app.get("/profile", authenticate, (req: AuthRequest, res) => {
   res.json({ message: "Welcome to your profile", user: req.user });
 });
 
-// Drill 6: Protected /admin route
 app.get("/admin", authenticate, requireRole("admin"), (req, res) => {
   res.json({ message: "Welcome, Admin!" });
 });
 
-// Drill 8: Brute force simulation endpoint (for testing)
 app.get("/test-brute-force", (req, res) => {
   res.send("Testing rate limit. Refresh many times.");
 });
 
-// Standard Error Handler
 app.use(
   (
     err: any,

@@ -28,7 +28,6 @@ export function closeDb() {
   if (db) db.close();
 }
 
-// Ensure database closes on exit
 process.on("exit", () => closeDb());
 process.on("SIGINT", () => {
   closeDb();
