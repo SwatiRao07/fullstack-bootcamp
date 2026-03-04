@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 
 const app = express();
-const PORT: string | number = process.env.PORT || 3000;
+const PORT= process.env.PORT || 3000;
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Express.");
@@ -15,7 +15,6 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// Graceful shutdown
 process.on("SIGINT", () => {
   console.log("\nShutting down.");
   server.close(() => {

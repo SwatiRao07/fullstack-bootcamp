@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 
 const app = express();
-const PORT: string | number = process.env.PORT || 3000;
+const PORT= process.env.PORT || 3000;
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Basic Routing Drills (TS)");

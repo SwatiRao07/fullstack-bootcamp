@@ -4,12 +4,8 @@ GET http://localhost:3000/v1/tasks
 ### 2. Request to V2
 GET http://localhost:3000/v2/tasks
 
-### 3. Generate success metrics 
-GET http://localhost:3000/v1/tasks
-GET http://localhost:3000/v2/tasks
-
-### 4. Generate error metrics
+### 3. Generate error metrics
 GET http://localhost:3000/v1/error
 
-### 5. Check metrics endpoint
+### 4. Check metrics endpoint
 GET http://localhost:3000/metrics

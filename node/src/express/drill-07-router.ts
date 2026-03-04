@@ -21,7 +21,7 @@ userRouter.get("/:id", (req: Request<{ id: string }>, res: Response) => {
 const postRouter: Router = express.Router();
 
 postRouter.get("/", (req: Request, res: Response) => {
-  res.json({ posts: ["Hello Express TS", "Sub-routers are powerful"] });
+  res.json({ posts: ["Hello Express TS"] });
 });
 
 app.use("/api/users", userRouter);
