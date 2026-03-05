@@ -1,29 +1,15 @@
-// ─── Drill Set 2: Retries & Exponential Backoff ───────────────────────────────
 import { fetchJson, FetchOptions } from "./baseClient";
 import { logger } from "../utils/logger";
 import { ApiError } from "../utils/errors";
 
 export interface RetryOptions {
-  /** Maximum number of retry attempts (default: 3) */
   maxRetries?: number;
-  /** Base delay in ms for exponential backoff (default: 500) */
   baseDelayMs?: number;
-  /** Maximum cap on any single delay (default: 10 000) */
   maxDelayMs?: number;
 }
 
 const RETRYABLE_STATUSES = new Set([502, 503, 504, 429]);
 
-/**
- * fetchWithRetry<T>(url, options?)
- *
- * Wraps fetchJson with:
- *  • Retries on 502 / 503 / 504 / 429.
- *  • Skips retries on all other 4xx errors.
- *  • Exponential back-off with ±100 ms jitter.
- *  • Honours the Retry-After header when the server sends one.
- *  • Logs each retry attempt with count and delay.
- */
 export async function fetchWithRetry<T = unknown>(
   url: string,
   fetchOptions: FetchOptions = {},
@@ -45,14 +31,13 @@ export async function fetchWithRetry<T = unknown>(
         !(err instanceof ApiError) ||
         !RETRYABLE_STATUSES.has(err.statusCode ?? 0)
       ) {
-        throw err; // Not retryable
+        throw err;
       }
 
       if (attempt >= maxRetries) {
-        throw err; // Exhausted retries
+        throw err;
       }
 
-      // Determine delay — respect Retry-After if present
       let delay: number;
       const retryAfterSec = err.context?.retryAfter;
       if (retryAfterSec && !isNaN(Number(retryAfterSec))) {

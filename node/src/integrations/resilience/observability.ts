@@ -1,13 +1,6 @@
-// ─── Drill Set 4: Observability ───────────────────────────────────────────────
 import { v4 as uuidv4 } from "uuid";
 import { logger } from "../utils/logger";
 
-// ── x-request-id ─────────────────────────────────────────────────────────────
-
-/**
- * Attaches a unique `x-request-id` to outbound requests so every log entry
- * for the same call is correlated.
- */
 export function withRequestId(
   options: RequestInit = {},
   id?: string,
@@ -21,8 +14,6 @@ export function withRequestId(
 export function getRequestId(options: RequestInit): string | null {
   return (options.headers as Headers)?.get?.("x-request-id") ?? null;
 }
-
-// ── Latency & Status Histogram ────────────────────────────────────────────────
 
 type Bucket = "2xx" | "4xx" | "5xx" | "unknown";
 

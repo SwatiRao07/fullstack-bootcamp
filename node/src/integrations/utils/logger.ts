@@ -1,4 +1,3 @@
-// ─── Shared Pino Logger ────────────────────────────────────────────────────────
 import pino from "pino";
 
 export const logger = pino({

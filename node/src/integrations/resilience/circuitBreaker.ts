@@ -1,18 +1,8 @@
-// ─── Drill Set 4: Circuit Breaker ────────────────────────────────────────────
 import { logger } from "../utils/logger";
 import { CircuitOpenError } from "../utils/errors";
 
 type State = "CLOSED" | "OPEN" | "HALF_OPEN";
 
-/**
- * CircuitBreaker
- *
- * • CLOSED  → normal operation
- * • OPEN    → after `threshold` consecutive failures (default: 3)
- *             all calls are immediately rejected for `resetTimeoutMs` (default: 10 s)
- * • HALF_OPEN → after the reset window expires, one probe call is allowed.
- *               Success → CLOSED | Failure → OPEN again
- */
 export class CircuitBreaker {
   private state: State = "CLOSED";
   private consecutiveFailures: number = 0;
@@ -70,7 +60,6 @@ export class CircuitBreaker {
     return this.state;
   }
 
-  /** Expose for testing */
   reset(): void {
     this.state = "CLOSED";
     this.consecutiveFailures = 0;

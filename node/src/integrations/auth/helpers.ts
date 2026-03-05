@@ -1,9 +1,5 @@
-// ─── Drill Set 3: Auth Header Helpers ────────────────────────────────────────
 import "dotenv/config";
 
-/**
- * withAuth – injects an `Authorization: Bearer <token>` header.
- */
 export function withAuth(
   options: RequestInit = {},
   token: string,
@@ -13,10 +9,6 @@ export function withAuth(
   return { ...options, headers };
 }
 
-/**
- * withApiKey – injects an `X-API-Key` header.
- * Falls back to process.env.API_KEY if no key supplied directly.
- */
 export function withApiKey(
   options: RequestInit = {},
   apiKey?: string,

@@ -1,5 +1,3 @@
-// ─── Integration Drills — Demo Entry Point ────────────────────────────────────
-// Run with: npx tsx src/integrations/index.ts
 import "dotenv/config";
 import { fetchJson } from "./clients/baseClient";
 import { fetchWithRetry } from "./clients/retryClient";
@@ -11,12 +9,10 @@ import { withIdempotency } from "./utils/idempotency";
 import { logger } from "./utils/logger";
 
 const PUBLIC_API = "https://httpbin.org/get";
-const POST_API = "https://httpbin.org/post";
 
 async function main() {
   logger.info("Integration Drills Demo");
 
-  // ── Drill 1: Basic fetchJson ──────────────────────────────────────────────
   logger.info("--- Drill 1: fetchJson with timeout ---");
   try {
     const data = await fetchJson<{ url: string }>(PUBLIC_API);
@@ -25,7 +21,6 @@ async function main() {
     logger.error({ err: err.message }, "Drill 1 error");
   }
 
-  // ── Drill 2: Retry (will hit real server, so unlikely to fail) ────────────
   logger.info("--- Drill 2: fetchWithRetry ---");
   try {
     const data = await fetchWithRetry<{ url: string }>(
@@ -38,7 +33,6 @@ async function main() {
     logger.error({ err: err.message }, "Drill 2 error");
   }
 
-  // ── Drill 3: withAuth + withApiKey ────────────────────────────────────────
   logger.info("--- Drill 3: Authentication ---");
   const token = await oauthClient.getToken();
   logger.info({ token: token.slice(0, 30) + "..." }, "OAuth2 token acquired");
@@ -57,7 +51,6 @@ async function main() {
     logger.error({ err: err.message }, "Drill 3 error");
   }
 
-  // ── Drill 4: Circuit Breaker ──────────────────────────────────────────────
   logger.info("--- Drill 4: Circuit Breaker ---");
   logger.info({ state: globalCircuitBreaker.getState() }, "CB state before");
   try {
@@ -69,7 +62,6 @@ async function main() {
     logger.error({ err: err.message }, "Drill 4 CB error");
   }
 
-  // ── Drill 6: Idempotent POST ──────────────────────────────────────────────
   logger.info("--- Drill 6: POST with Idempotency Key ---");
   const postOptions = withIdempotency({
     method: "POST",

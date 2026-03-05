@@ -1,4 +1,3 @@
-// ─── Drill Set 5 & 6: Integration Tests (Vitest + MSW) ───────────────────────
 import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
 import { setupServer } from "msw/node";
 import { handlers, BASE, resetCounts } from "./mocks/handlers";
@@ -9,7 +8,6 @@ import { withIdempotency } from "../utils/idempotency";
 import { ApiError, ParseError, TimeoutError } from "../utils/errors";
 import { CircuitBreaker } from "../resilience/circuitBreaker";
 
-// Re-create the server inline so Vitest owns the lifecycle
 const mswServer = setupServer(...handlers);
 
 beforeAll(() => mswServer.listen({ onUnhandledRequest: "error" }));
@@ -19,8 +17,7 @@ afterEach(() => {
 });
 afterAll(() => mswServer.close());
 
-// ── Drill 5: Happy path ────────────────────────────────────────────────────
-describe("Drill 5 – Happy path", () => {
+describe("Test case : Happy path", () => {
   it("parses a valid JSON response correctly", async () => {
     const data = await fetchJson<{ id: number; name: string }>(`${BASE}/data`);
     expect(data.id).toBe(1);
@@ -28,8 +25,7 @@ describe("Drill 5 – Happy path", () => {
   });
 });
 
-// ── Drill 5: 401 Unauthorized ─────────────────────────────────────────────
-describe("Drill 5 – 401 Unauthorized", () => {
+describe("Test case : 401 Unauthorized", () => {
   it("throws ApiError with statusCode 401", async () => {
     const options = withAuth({}, "bad-token");
     await expect(fetchJson(`${BASE}/protected`, options)).rejects.toThrow(
@@ -45,8 +41,7 @@ describe("Drill 5 – 401 Unauthorized", () => {
   });
 });
 
-// ── Drill 5: 503 with retries + backoff ───────────────────────────────────
-describe("Drill 5 – 503 retries & backoff", () => {
+describe("Test case : 503 retries & backoff", () => {
   it("succeeds after 3 attempts (2 failures + 1 success)", async () => {
     const data = await fetchWithRetry<{ message: string }>(
       `${BASE}/flaky`,
@@ -57,8 +52,7 @@ describe("Drill 5 – 503 retries & backoff", () => {
   });
 });
 
-// ── Drill 5: Timeout ──────────────────────────────────────────────────────
-describe("Drill 5 – Client-side timeout", () => {
+describe("Test case : Client-side timeout", () => {
   it("throws TimeoutError when server is too slow", async () => {
     await expect(fetchJson(`${BASE}/slow`, { timeoutMs: 500 })).rejects.toThrow(
       TimeoutError,
@@ -66,15 +60,13 @@ describe("Drill 5 – Client-side timeout", () => {
   }, 3_000);
 });
 
-// ── Drill 6: Invalid JSON ─────────────────────────────────────────────────
-describe("Drill 6 – Invalid JSON response", () => {
+describe("Test case : Invalid JSON response", () => {
   it("throws ParseError on unparseable body", async () => {
     await expect(fetchJson(`${BASE}/bad-json`)).rejects.toThrow(ParseError);
   });
 });
 
-// ── Drill 6: 429 with Retry-After ─────────────────────────────────────────
-describe("Drill 6 – 429 Rate Limit (Retry-After)", () => {
+describe("Test case : 429 Rate Limit (Retry-After)", () => {
   it("throws ApiError with statusCode 429 after exhausting retries", async () => {
     await expect(
       fetchWithRetry(
@@ -86,8 +78,7 @@ describe("Drill 6 – 429 Rate Limit (Retry-After)", () => {
   });
 });
 
-// ── Drill 6: Idempotency key on POST ──────────────────────────────────────
-describe("Drill 6 – POST with idempotency key", () => {
+describe("Test case : POST with idempotency key", () => {
   it("sends and echoes the idempotency key", async () => {
     const options = withIdempotency({ method: "POST", body: "{}" });
     const key = (options.headers as Headers).get("idempotency-key");
@@ -102,8 +93,7 @@ describe("Drill 6 – POST with idempotency key", () => {
   });
 });
 
-// ── Drill 4: Circuit Breaker ──────────────────────────────────────────────
-describe("Drill 4 – Circuit Breaker", () => {
+describe("Test Case: Circuit Breaker", () => {
   it("opens after 3 consecutive failures", async () => {
     const cb = new CircuitBreaker(3, 10_000);
     const fail = () => Promise.reject(new Error("boom"));
