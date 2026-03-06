@@ -3,15 +3,12 @@ import { UserRepositoryPostgres } from '../drill-02-repo-db/userRepository';
 import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
-app.use(express.json());
-
-// Middleware to inject Request ID
+app.use(express.json())
 app.use((req, res, next) => {
   (req as any).id = uuidv4();
   next();
 });
 
-// RFC 7807 Error Helper
 const sendProblem = (res: Response, status: number, title: string, detail: string) => {
   res.setHeader('Content-Type', 'application/problem+json');
   res.status(status).json({
@@ -23,7 +20,6 @@ const sendProblem = (res: Response, status: number, title: string, detail: strin
   });
 };
 
-// Helper to get Repo from app.locals
 const getRepo = (req: Request): UserRepositoryPostgres => {
   return req.app.locals.userRepo;
 };
@@ -53,7 +49,7 @@ app.get('/users/:id', async (req, res) => {
   }
   try {
     const repo = getRepo(req);
-    const user = await repo.getUserByEmailOrId(id); // I'll add this helper to repo
+    const user = await repo.getUserByEmailOrId(id); 
 
     if (!user) {
       return sendProblem(res, 404, 'Not Found', 'User does not exist');
@@ -70,7 +66,7 @@ app.get('/users', async (req, res) => {
 
   try {
     const repo = getRepo(req);
-    const users = await repo.getUsers(limit, offset); // I'll add this helper to repo
+    const users = await repo.getUsers(limit, offset);
     res.status(200).json(users);
   } catch (err: any) {
     sendProblem(res, 503, 'Service Unavailable', 'Database is currently unreachable');

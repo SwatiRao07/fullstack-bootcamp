@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { getTestDb, clearDb } from '../setup/db';
 
-describe('Drill 5 — Error & Edge Cases', () => {
+describe('Error & Edge Cases', () => {
   beforeEach(() => {
     clearDb();
   });
@@ -17,8 +17,6 @@ describe('Drill 5 — Error & Edge Cases', () => {
   });
 
   it('should force a transaction rollback and assert data isn’t persisted', () => {
-    // Re-ensure DB is open (getTestDb is a singleton, closing it affects others)
-    // So for this specific drill we skip singleton and use a local one
     const Database = require('better-sqlite3');
     const localDb = new Database(':memory:');
     localDb.exec('CREATE TABLE test (val TEXT)');

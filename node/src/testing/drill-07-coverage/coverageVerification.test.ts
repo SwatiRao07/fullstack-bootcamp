@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Drill 7 — Coverage & CI Verification', () => {
+describe('Coverage & CI Verification', () => {
   it('should have the GitHub Actions workflow file', () => {
     const workflowPath = path.resolve(process.cwd(), '.github/workflows/test.yml');
     expect(fs.existsSync(workflowPath)).toBe(true);

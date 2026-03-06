@@ -24,7 +24,7 @@ describe('Repo + DB Integration (Postgres)', () => {
     await pool.query(sql);
 
     repo = new UserRepositoryPostgres(pool);
-  }, 60000); // 1 minute timeout for first pull
+  }, 60000);
 
   afterAll(async () => {
     if (pool) await pool.end();
@@ -32,11 +32,9 @@ describe('Repo + DB Integration (Postgres)', () => {
   });
 
   beforeEach(async () => {
-    // Truncate tables between tests
     await repo.truncate();
   });
 
-  // 3. Write a test for createUser and getUserByEmail.
   it('should create and retrieve a user by email', async () => {
     const email = 'test@example.com';
     const name = 'Test User';
@@ -51,7 +49,6 @@ describe('Repo + DB Integration (Postgres)', () => {
     expect(retrieved?.name).toBe(name);
   });
 
-  // 4. Verify duplicate email insert throws unique-violation error.
   it('should throw unique-violation error on duplicate email', async () => {
     const email = 'duplicate@example.com';
     await repo.createUser(email, 'First');

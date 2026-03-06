@@ -29,7 +29,7 @@ afterEach(() => {
 });
 afterAll(() => server.close());
 
-describe('Drill 4 — External Services with MSW', () => {
+describe('External Services with MSW', () => {
   it('should map 401 to 502', async () => {
     await expect(fetchExternalData('401')).rejects.toThrow(/External Auth Failed/);
     try {

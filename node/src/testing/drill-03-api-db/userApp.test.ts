@@ -7,7 +7,7 @@ import { UserRepositoryPostgres } from '../drill-02-repo-db/userRepository';
 import fs from 'fs';
 import path from 'path';
 
-describe('Drill 3 — API + DB Integration (Postgres)', () => {
+describe('API + DB Integration (Postgres)', () => {
   let container: StartedPostgreSqlContainer;
   let pool: Pool;
   let repo: UserRepositoryPostgres;
