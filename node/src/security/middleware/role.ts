@@ -1,10 +1,10 @@
-import { Response, NextFunction } from "express";
-import { AuthRequest } from "./auth";
+import { Response, NextFunction } from 'express';
+import { AuthRequest } from './auth';
 
 export const requireRole = (role: string) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user || req.user.role !== role) {
-      return res.status(403).json({ error: "Access denied. Forbidden." });
+      return res.status(403).json({ error: 'Access denied. Forbidden.' });
     }
     next();
   };

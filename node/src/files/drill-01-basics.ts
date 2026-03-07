@@ -1,11 +1,4 @@
-import {
-  writeFile,
-  appendFile,
-  readFile,
-  unlink,
-  access,
-  constants,
-} from "fs/promises";
+import { writeFile, appendFile, readFile, unlink, access, constants } from 'fs/promises';
 
 async function fileExists(path: string): Promise<boolean> {
   try {
@@ -17,18 +10,18 @@ async function fileExists(path: string): Promise<boolean> {
 }
 
 async function run() {
-  const path = "sample.txt";
+  const path = 'sample.txt';
 
-  await writeFile(path, "Hello, Node.js\n");
-  await appendFile(path, "This is appended text.\n");
+  await writeFile(path, 'Hello, Node.js\n');
+  await appendFile(path, 'This is appended text.\n');
 
   if (await fileExists(path)) {
-    const content = await readFile(path, "utf-8");
-    console.log("File content:\n", content);
+    const content = await readFile(path, 'utf-8');
+    console.log('File content:\n', content);
   }
 
   await unlink(path);
-  console.log("File deleted.");
+  console.log('File deleted.');
 }
 
 run();

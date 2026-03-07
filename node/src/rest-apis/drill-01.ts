@@ -1,30 +1,30 @@
-import express from "express";
+import express from 'express';
 
 const app = express();
 app.use(express.json());
-const PORT= process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get("/tasks", (req, res) => {
-  res.status(200).json([{ id: 1, title: "Task 1" }]);
+app.get('/tasks', (req, res) => {
+  res.status(200).json([{ id: 1, title: 'Task 1' }]);
 });
 
-app.post("/tasks", (req, res) => {
-  res.status(201).json({ id: 2, title: "Task 2" });
+app.post('/tasks', (req, res) => {
+  res.status(201).json({ id: 2, title: 'Task 2' });
 });
 
-app.get("/tasks/:id", (req, res) => {
-  res.status(200).json({ id: 1, title: "Task 1" });
+app.get('/tasks/:id', (req, res) => {
+  res.status(200).json({ id: 1, title: 'Task 1' });
 });
 
-app.put("/tasks/:id", (req, res) => {
-  res.status(200).json({ id: 1, title: "Updated" });
+app.put('/tasks/:id', (req, res) => {
+  res.status(200).json({ id: 1, title: 'Updated' });
 });
 
-app.delete("/tasks/:id", (req, res) => {
+app.delete('/tasks/:id', (req, res) => {
   res.status(204).send();
 });
 
-app.get("/users/:id/tasks", (req, res) => {
+app.get('/users/:id/tasks', (req, res) => {
   res.status(200).json([{ id: 1, userId: req.params.id }]);
 });
 

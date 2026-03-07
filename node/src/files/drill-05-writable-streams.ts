@@ -1,7 +1,7 @@
-import { createWriteStream } from "fs";
+import { createWriteStream } from 'fs';
 
-const logStream = createWriteStream("app.log", {
-  flags: "a", // append mode
+const logStream = createWriteStream('app.log', {
+  flags: 'a', // append mode
 });
 
 for (let i = 1; i <= 5; i++) {
@@ -10,11 +10,11 @@ for (let i = 1; i <= 5; i++) {
 
 logStream.end();
 
-logStream.on("finish", () => {
-  console.log("All data flushed to file.");
+logStream.on('finish', () => {
+  console.log('All data flushed to file.');
 });
 
-const stream = createWriteStream("big.log" );
+const stream = createWriteStream('big.log');
 
 let i = 0;
 const total = 100000;
@@ -28,7 +28,7 @@ function write() {
   }
 
   if (i < total) {
-    stream.once("drain", write);
+    stream.once('drain', write);
   } else {
     stream.end();
   }
@@ -36,11 +36,11 @@ function write() {
 
 write();
 
-stream.on("finish", () => {
-  console.log("Done writing large file.");
+stream.on('finish', () => {
+  console.log('Done writing large file.');
 });
 
-const path = "binary.dat";
+const path = 'binary.dat';
 const buffer = Buffer.alloc(10, 0xff);
 
 const stream1 = createWriteStream(path);
@@ -48,10 +48,10 @@ const stream1 = createWriteStream(path);
 stream1.write(buffer);
 stream1.end();
 
-stream1.on("finish", () => {
-  console.log("Binary buffer written correctly.");
+stream1.on('finish', () => {
+  console.log('Binary buffer written correctly.');
 });
 
-stream1.on("error", (err) => {
-  console.error("Write error:", err);
+stream1.on('error', (err) => {
+  console.error('Write error:', err);
 });

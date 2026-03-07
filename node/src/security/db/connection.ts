@@ -1,11 +1,11 @@
-import { createRequire } from "module";
+import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const Database = require("better-sqlite3");
-import path from "path";
-import { fileURLToPath } from "url";
+const Database = require('better-sqlite3');
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.resolve(__dirname, "../../../security.db");
+const dbPath = path.resolve(__dirname, '../../../security.db');
 
 let db: any;
 

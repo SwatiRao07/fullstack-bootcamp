@@ -1,0 +1,57 @@
+### Drill 1: Basics of Background Work
+# This request enqueues a fake email job in an in-memory queue.
+POST http://localhost:3000/email
+Content-Type: application/json
+
+{
+    "to": "user@example.com",
+    "subject": "Hello Drill 1",
+    "body": "This is enqueued in-memory."
+}
+
+### Drill 2: Worker Threads (Main Thread)
+# This blocks the event loop with a heavy CPU calculation (Fibonacci).
+GET http://localhost:3001/fib-main/40
+
+### Drill 2: Worker Threads (Worker Thread)
+# This runs the same calculation in a separate thread, keeping the event loop responsive.
+GET http://localhost:3001/fib-worker/40
+
+### Drill 3 & 4: Job Queues with Redis & BullMQ
+# Enqueues a job into Redis using BullMQ for persistence and reliability.
+POST http://localhost:3002/email
+Content-Type: application/json
+
+{
+    "to": "user@example.com",
+    "subject": "Hello BullMQ",
+    "body": "Enqueued with persistence."
+}
+
+### Drill 3 & 4: Simulate Failure & Automatic Retries
+# Passing "simulateFailure": true will cause the worker to fail twice before succeeding.
+POST http://localhost:3002/email
+Content-Type: application/json
+
+{
+    "to": "user@example.com",
+    "subject": "Retry Test",
+    "body": "This should fail twice and succeed on the third attempt.",
+    "simulateFailure": true
+}
+
+### Drill 4: Idempotency Logic
+# Multiple requests with the same "idempotencyKey" will result in only one unique job in the queue.
+POST http://localhost:3002/email
+Content-Type: application/json
+
+{
+    "idempotencyKey": "unique-msg-id-123",
+    "to": "user@example.com",
+    "subject": "Idempotent Msg",
+    "body": "Sending this twice should result in a single job."
+}
+
+### Drill 4: Bull Board UI
+# Visit this URL in your browser to inspect the state of the BullMQ queues.
+GET http://localhost:3002/admin/queues

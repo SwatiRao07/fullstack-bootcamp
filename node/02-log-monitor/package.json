@@ -1,0 +1,12 @@
+{
+  "name": "logmon",
+  "version": "1.0.0",
+  "description": "A robust log monitoring tool",
+  "main": "logmon.js",
+  "scripts": {
+    "start": "node logmon.js"
+  },
+  "keywords": ["log", "monitor", "watch", "stream"],
+  "author": "Antigravity",
+  "license": "MIT"
+}
