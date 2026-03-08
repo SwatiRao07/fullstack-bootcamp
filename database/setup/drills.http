@@ -1,10 +1,8 @@
 ### Database Drills API Tests
 
-@baseUrl = http://localhost:3000/api
-
 ### Drill Set 2: Users
 # @name createUser
-POST {{baseUrl}}/users
+POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
@@ -12,11 +10,11 @@ Content-Type: application/json
 }
 
 ### Drill Set 2: Get All Users
-GET {{baseUrl}}/users
+GET http://localhost:3000/api/users
 
 ### Drill Set 2 & 3: Create Task
 # @name createTask
-POST {{baseUrl}}/tasks
+POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
 {
@@ -25,13 +23,13 @@ Content-Type: application/json
 }
 
 ### Drill Set 3: Read Tasks (All)
-GET {{baseUrl}}/tasks
+GET http://localhost:3000/api/tasks
 
 ### Drill Set 3: Read Tasks (Filtered by Completion)
-GET {{baseUrl}}/tasks?completed=false
+GET http://localhost:3000/api/tasks?completed=false
 
 ### Drill Set 3: Update Task (Mark Complete)
-PATCH {{baseUrl}}/tasks/1
+PATCH http://localhost:3000/api/tasks/1
 Content-Type: application/json
 
 {
@@ -39,10 +37,10 @@ Content-Type: application/json
 }
 
 ### Drill Set 4: Get Tasks with User Emails (JOIN)
-GET {{baseUrl}}/tasks/detailed
+GET http://localhost:3000/api/tasks/detailed
 
 ### Drill Set 5: Test Constraint Violation (Empty Title)
-POST {{baseUrl}}/tasks
+POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
 {
@@ -51,7 +49,7 @@ Content-Type: application/json
 }
 
 ### Drill Set 5: Test Unique Constraint (Duplicate Email)
-POST {{baseUrl}}/users
+POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
@@ -59,4 +57,4 @@ Content-Type: application/json
 }
 
 ### Drill Set 3: Delete Task
-DELETE {{baseUrl}}/tasks/1
+DELETE http://localhost:3000/api/tasks/1
