@@ -1,6 +1,3 @@
--- Drill Set 2 & 4 & 5: Schema Definition
-
--- Create users table
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     email TEXT UNIQUE NOT NULL,
@@ -8,7 +5,6 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT email_unique UNIQUE(email)
 );
 
--- Create tasks table
 CREATE TABLE IF NOT EXISTS tasks (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL CHECK (LENGTH(title) > 0),
