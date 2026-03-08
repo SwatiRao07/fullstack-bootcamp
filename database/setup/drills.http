@@ -1,0 +1,62 @@
+### Database Drills API Tests
+
+@baseUrl = http://localhost:3000/api
+
+### Drill Set 2: Users
+# @name createUser
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
+
+### Drill Set 2: Get All Users
+GET {{baseUrl}}/users
+
+### Drill Set 2 & 3: Create Task
+# @name createTask
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Learn PostgreSQL",
+  "user_id": 1
+}
+
+### Drill Set 3: Read Tasks (All)
+GET {{baseUrl}}/tasks
+
+### Drill Set 3: Read Tasks (Filtered by Completion)
+GET {{baseUrl}}/tasks?completed=false
+
+### Drill Set 3: Update Task (Mark Complete)
+PATCH {{baseUrl}}/tasks/1
+Content-Type: application/json
+
+{
+  "completed": true
+}
+
+### Drill Set 4: Get Tasks with User Emails (JOIN)
+GET {{baseUrl}}/tasks/detailed
+
+### Drill Set 5: Test Constraint Violation (Empty Title)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "user_id": 1
+}
+
+### Drill Set 5: Test Unique Constraint (Duplicate Email)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
+
+### Drill Set 3: Delete Task
+DELETE {{baseUrl}}/tasks/1
