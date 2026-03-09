@@ -1,9 +1,7 @@
-### Drill 1: Category Operations
-
-### 1. List Categories
+### 
 GET http://localhost:3000/api/categories
 
-### 2. Create Category
+### 
 POST http://localhost:3000/api/categories
 Content-Type: application/json
 
@@ -12,5 +10,5 @@ Content-Type: application/json
     "color": "red"
 }
 
-### 3. Get Stats (Tasks per Category)
+###
 GET http://localhost:3000/api/categories/stats

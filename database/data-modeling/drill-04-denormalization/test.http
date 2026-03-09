@@ -1,9 +1,7 @@
-### Drill 4: Strategic Denormalization
-
-### 1. View current User counts (Denormalized)
+### View current User counts (Denormalized)
 GET http://localhost:3000/api/users
 
-### 2. Create a new task (Should trigger +1 in User count)
+### Create a new task (Should trigger +1 in User count)
 POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
@@ -12,9 +10,9 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### 3. Verify count bumped
+### Verify count bumped
 GET http://localhost:3000/api/users
 
-### 4. Delete a task (Should trigger -1 in User count)
+### Delete a task (Should trigger -1 in User count)
 # Assuming id 1 exists
 DELETE http://localhost:3000/api/tasks/1

@@ -1,0 +1,26 @@
+### 
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+    "title": "Buy groceries",
+    "user_id": 1,
+    "metadata": {
+        "priority": "high",
+        "tags": ["important", "shopping"],
+        "due_date": "2024-01-15"
+    }
+}
+
+###
+PATCH http://localhost:3000/api/tasks/1
+Content-Type: application/json
+
+{
+    "metadata": {
+        "completed_at": "2026-03-09T19:20:00Z"
+    }
+}
+
+###
+GET http://localhost:3000/api/tasks/filter?priority=high

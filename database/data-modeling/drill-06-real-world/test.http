@@ -1,0 +1,42 @@
+### 
+POST http://localhost:3000/api/projects
+Content-Type: application/json
+
+{
+  "name": "Database Redesign",
+  "description": "Improving the task app database structure"
+}
+
+###
+PATCH http://localhost:3000/api/tasks/1
+Content-Type: application/json
+
+{
+  "project_id": 1
+}
+
+### 
+POST http://localhost:3000/api/projects/1/comments
+Content-Type: application/json
+
+{
+  "authorId": 1,
+  "content": "This is a great task!"
+}
+
+###
+GET http://localhost:3000/api/projects/1/full
+
+### 
+PATCH http://localhost:3000/api/projects/preferences/1
+Content-Type: application/json
+
+{
+  "settings": {
+    "theme": "dark",
+    "notifications": true
+  }
+}
+
+### 
+GET http://localhost:3000/api/projects/preferences/1
