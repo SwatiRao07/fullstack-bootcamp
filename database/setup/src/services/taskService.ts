@@ -2,10 +2,10 @@ import { query } from "../config/database";
 import { Task } from "../models/schema";
 
 export const taskService = {
-  async createTask(title: string, userId?: number): Promise<Task> {
+  async createTask(title: string, user_id?: number): Promise<Task> {
     const result = await query(
       "INSERT INTO tasks (title, user_id) VALUES ($1, $2) RETURNING *",
-      [title, userId || null],
+      [title, user_id || null],
     );
     return result.rows[0];
   },
@@ -42,7 +42,6 @@ export const taskService = {
   },
 
   async getTasksWithEmployees(): Promise<any[]> {
-    // Drill 4: JOIN to get tasks with user email
     const sql = `
       SELECT t.id, t.title, t.completed, u.email 
       FROM tasks t 

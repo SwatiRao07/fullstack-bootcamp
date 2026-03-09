@@ -1,0 +1,25 @@
+### Drill 2: Tag Operations
+
+### 1. List Tags
+GET http://localhost:3000/api/tags
+
+### 2. Create Tag
+POST http://localhost:3000/api/tags
+Content-Type: application/json
+
+{
+    "name": "Priority"
+}
+
+### 3. Assign Tags to Task
+# Assign tag 1 and 2 to task 1
+POST http://localhost:3000/api/tags/assign
+Content-Type: application/json
+
+{
+    "taskId": 1,
+    "tagIds": [1, 2]
+}
+
+### 4. Fetch Tasks with Tag Names
+GET http://localhost:3000/api/tags/tasks-with-tags

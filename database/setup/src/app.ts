@@ -5,6 +5,8 @@ import { pool } from "./config/database";
 import userRoutes from "./routes/users";
 import taskRoutes from "./routes/tasks";
 import { errorHandler } from "./middleware/error";
+import categoryRoutes from "../../data-modeling/drill-01-one-to-many/categoryRoutes";
+import tagRoutes from "../../data-modeling/drill-02-many-to-many/tagRoutes";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,6 +17,8 @@ app.use(express.json());
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/tags", tagRoutes);
 
 // Error Handling
 app.use(errorHandler);
