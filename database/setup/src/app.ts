@@ -14,20 +14,17 @@ const port = process.env.PORT || 3000;
 app.use(morgan("dev"));
 app.use(express.json());
 
-// Routes
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/tags", tagRoutes);
 
-// Error Handling
 app.use(errorHandler);
 
 const server = app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-// Graceful Shutdown (Drill 6)
 const shutdown = async () => {
   console.log("\nShutting down gracefully...");
   server.close(async () => {

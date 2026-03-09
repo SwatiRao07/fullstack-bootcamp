@@ -14,4 +14,3 @@ VALUES
 ('Aarav Patel', 'aarav@example.com', 'Mouse', 25.00),
 ('Ishaan Sharma', 'ishaan@example.com', 'Keyboard', 50.00);
 
--- Notice: Aarav's name and email are duplicated.

@@ -7,8 +7,6 @@ CREATE TABLE IF NOT EXISTS categories (
     color TEXT
 );
 
--- 2. Extend tasks table with category_id foreign key
--- We add it as nullable so existing tasks don't break immediately
 ALTER TABLE tasks ADD COLUMN IF NOT EXISTS category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL;
 
 -- 3. Insert categories: "Work", "Personal", "Shopping"
@@ -17,7 +15,6 @@ VALUES ('Work', 'blue'), ('Personal', 'green'), ('Shopping', 'orange')
 ON CONFLICT (name) DO NOTHING;
 
 -- 4. Update existing tasks to belong to categories (example data)
--- Assuming some tasks exist; we'll link them to the first category if they have no category
 UPDATE tasks SET category_id = (SELECT id FROM categories WHERE name = 'Work')
 WHERE category_id IS NULL;
 
