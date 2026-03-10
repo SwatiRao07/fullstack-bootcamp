@@ -2,10 +2,14 @@ import { query } from "../config/database";
 import { Task } from "../models/schema";
 
 export const taskService = {
-  async createTask(title: string, user_id?: number): Promise<Task> {
+  async createTask(
+    title: string,
+    user_id?: number,
+    metadata: any = {},
+  ): Promise<Task> {
     const result = await query(
-      "INSERT INTO tasks (title, user_id) VALUES ($1, $2) RETURNING *",
-      [title, user_id || null],
+      "INSERT INTO tasks (title, user_id, metadata) VALUES ($1, $2, $3) RETURNING *",
+      [title, user_id || null, JSON.stringify(metadata)],
     );
     return result.rows[0];
   },
@@ -18,6 +22,22 @@ export const taskService = {
       return result.rows;
     }
     const result = await query("SELECT * FROM tasks");
+    return result.rows;
+  },
+
+  async updateTaskMetadata(id: number, metadata: any): Promise<Task | null> {
+    const result = await query(
+      "UPDATE tasks SET metadata = metadata || $2 WHERE id = $1 RETURNING *",
+      [id, JSON.stringify(metadata)],
+    );
+    return result.rows[0] || null;
+  },
+
+  async filterTasksByPriority(priority: string): Promise<Task[]> {
+    const result = await query(
+      "SELECT * FROM tasks WHERE metadata->>'priority' = $1",
+      [priority],
+    );
     return result.rows;
   },
 
