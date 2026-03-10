@@ -6,22 +6,22 @@ This document outlines the strategy for backing up and restoring the `taskapp_de
 
 ### Automated Backups
 
-Automated backups are handled via the `src/scripts/backup.ps1` script. This script performs the following actions:
+Automated backups are handled via the `src/scripts/backup.sh` script. This script performs the following actions:
 
 1.  Generates a timestamped SQL dump using `pg_dump`.
 2.  Saves the dump to the `./backups/` directory.
-3.  Implements **Rotation**: Automatically deletes backups older than 7 days to manage disk space.
+3.  Implements **Rotation**: Automatically deletes backups older than 7 days using `find`.
 
 **To run manually:**
 
-```powershell
+```bash
 pnpm run backup
 ```
 
 ### Retention Policy
 
-- **Daily**: One backup per day is generated via CI/CD or Task Scheduler.
-- **Weekly**: Weekly snapshots are archived externally (manual process or cloud sync).
+- **Daily**: One backup per day is generated via CI/CD or cron jobs.
+- **Weekly**: Weekly snapshots are archived externally.
 
 ## Restoration Procedure
 
@@ -29,12 +29,12 @@ In the event of data corruption or loss, follow these steps:
 
 1.  **Identify the Backup**: Choose the latest stable `.sql` file from the `./backups/` directory.
 2.  **Verify Integrity**: Ensure the backup file is not empty and contains valid SQL statements.
-3.  **Perform Restore**: Use the `src/scripts/restore.ps1` script.
+3.  **Perform Restore**: Use the `src/scripts/restore.sh` script.
 
 **Usage:**
 
-```powershell
-pnpm run restore -- -BackupFile ./backups/backup_20260309_120000.sql
+```bash
+pnpm run restore -- ./backups/backup_20260309_120000.sql
 ```
 
 **WARNING**: The restoration process will overwrite existing tables in the `public` schema. Ensure you have a current snapshot before restoring an older one.

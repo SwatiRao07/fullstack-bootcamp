@@ -6,11 +6,11 @@
   "scripts": {
     "test": "vitest",
     "db:seed": "tsx src/scripts/seed.ts",
-    "db:seed:sqlite": "set DB_TYPE=sqlite&& set SQLITE_PATH=./test.db&& tsx src/scripts/seed.ts",
+    "db:seed:sqlite": "DB_TYPE=sqlite SQLITE_PATH=./test.db tsx src/scripts/seed.ts",
     "db:reset": "tsx src/scripts/reset.ts",
-    "db:reset:sqlite": "set DB_TYPE=sqlite&& set SQLITE_PATH=./test.db&& tsx src/scripts/reset.ts",
-    "backup": "powershell ./src/scripts/backup.ps1",
-    "restore": "powershell ./src/scripts/restore.ps1"
+    "db:reset:sqlite": "DB_TYPE=sqlite SQLITE_PATH=./test.db tsx src/scripts/reset.ts",
+    "backup": "bash src/scripts/backup.sh",
+    "restore": "bash src/scripts/restore.sh"
   },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
