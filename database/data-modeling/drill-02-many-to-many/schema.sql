@@ -3,14 +3,12 @@ CREATE TABLE IF NOT EXISTS tags (
     name TEXT UNIQUE NOT NULL
 );
 
--- Create a junction table task_tags
 CREATE TABLE IF NOT EXISTS task_tags (
     task_id INTEGER REFERENCES tasks(id) ON DELETE CASCADE,
     tag_id INTEGER REFERENCES tags(id) ON DELETE CASCADE,
     PRIMARY KEY (task_id, tag_id)
 );
 
--- Insert tags: "urgent", "home", "office"
 INSERT INTO tags (name) VALUES ('urgent'), ('home'), ('office')
 ON CONFLICT (name) DO NOTHING;
 

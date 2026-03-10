@@ -1,31 +1,27 @@
-### Drill 1: Admin Migration
-# Run migrations and initialize schema
+### 
 POST http://localhost:3000/api/admin/migrate
 
-### Drill 2: Connection Management & Health
-# Verify database connectivity and latency
+### 
 GET http://localhost:3000/api/health
 
-### Drill 3: Repository Pattern (User CRUD)
-# Create a new user
+
 # @name createUser
 POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "email": "advanced_user@example.com"
+  "email": "divya@example.com"
 }
 
-### List all users
+### 
 GET http://localhost:3000/api/users
 
-### Drill 4: Transaction Management (Project + Tasks)
-# Atomic creation of a project and its associated tasks
+### 
 POST http://localhost:3000/api/projects
 Content-Type: application/json
 
 {
-  "name": "Advanced Architecture Project",
+  "name": "Project",
   "tasks": [
     "Design Repository Pattern",
     "Implement Transaction Wrapper",
@@ -33,8 +29,7 @@ Content-Type: application/json
   ]
 }
 
-### Test Transaction Rollback
-# Should fail because of empty task title, and no project should be created
+### 
 POST http://localhost:3000/api/projects
 Content-Type: application/json
 
@@ -46,6 +41,5 @@ Content-Type: application/json
   ]
 }
 
-### Drill 5: Slow Query Simulation
-# Observe the console for [SLOW QUERY] logs (>100ms)
+### 
 GET http://localhost:3000/api/slow

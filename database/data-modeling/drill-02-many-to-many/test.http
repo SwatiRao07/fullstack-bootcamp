@@ -15,8 +15,8 @@ POST http://localhost:3000/api/tags/assign
 Content-Type: application/json
 
 {
-    "taskId": 1,
-    "tagIds": [1, 2]
+    "taskId": 2,
+    "tagIds": [3, 4]
 }
 
 ### 
