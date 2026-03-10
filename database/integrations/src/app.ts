@@ -75,7 +75,6 @@ const server = app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-// Drill 2: Graceful Shutdown
 const shutdown = async () => {
   console.log("\nShutting down gracefully.");
   server.close(async () => {
