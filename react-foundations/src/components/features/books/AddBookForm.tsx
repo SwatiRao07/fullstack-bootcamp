@@ -27,10 +27,9 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ onAddBook }) => {
     setYear(new Date().getFullYear());
   };
 
-  // Drill Set 4: keyboard event handling — submit on Enter key
+  
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      // Pass data through event handler using an arrow function at call site
       console.log("Enter pressed — submitting:", { title, author, year });
     }
   };
@@ -45,8 +44,8 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ onAddBook }) => {
           type="text"
           placeholder="Book Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)} // Drill Set 4: onChange
-          onKeyDown={handleKeyDown} // Drill Set 4: onKeyDown
+          onChange={(e) => setTitle(e.target.value)} 
+          onKeyDown={handleKeyDown} 
           required
         />
       </div>

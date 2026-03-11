@@ -14,9 +14,8 @@ import "./App.css";
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Drill Set 5: error state
+  const [error, setError] = useState<string | null>(null); 
   const [searchTerm, setSearchTerm] = useState("");
-  // Drill Set 6: Modal state — shows/hides based on useState
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   const currentUser: User = {
@@ -27,18 +26,15 @@ function App() {
   };
 
   useEffect(() => {
-    // Drill Set 5: AbortController for effect cleanup
     const controller = new AbortController();
 
     const loadData = async () => {
       try {
         setLoading(true);
         setError(null);
-        // Drill Set 5: fetch from REST API, pass signal for cleanup
         const data = await fetchBooks(controller.signal);
         setBooks(data);
       } catch (err) {
-        // Drill Set 5: error handling — ignore AbortError on unmount
         if (err instanceof DOMException && err.name === "AbortError") return;
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
@@ -46,11 +42,10 @@ function App() {
       }
     };
 
-    loadData(); // Drill Set 5: run once on mount (empty dependency array [])
+    loadData(); 
 
-    // Drill Set 5: cleanup — cancel in-flight request when component unmounts
     return () => controller.abort();
-  }, []); // Drill Set 5: [] = run once on mount
+  }, []); 
 
   const filteredBooks = useMemo(() => {
     return books.filter(
@@ -61,7 +56,6 @@ function App() {
   }, [books, searchTerm]);
 
   const handleToggleAvailability = (id: string) => {
-    // Drill Set 3: spread operator to update object inside array — never mutate
     setBooks((prev) =>
       prev.map((book) =>
         book.id === id ? { ...book, isAvailable: !book.isAvailable } : book,
@@ -70,12 +64,12 @@ function App() {
   };
 
   const handleAddBook = (newBook: Omit<Book, "id">) => {
-    // Drill Set 3: spread object to build a new book, spread array to prepend
+
     const bookWithId = {
       ...newBook,
       id: Math.random().toString(36).substr(2, 9),
     };
-    // Drill Set 3: setState([...oldArray, newItem]) — never push directly
+   
     setBooks((prev) => [bookWithId, ...prev]);
   };
 
@@ -119,7 +113,7 @@ function App() {
             />
           </div>
 
-          {/* Drill Set 5: handle loading, error, and data states */}
+          {/*handle loading, error, and data states */}
           {loading ? (
             <LoadingSpinner />
           ) : error ? (
@@ -142,7 +136,7 @@ function App() {
         </main>
       </div>
 
-      {/* Drill Set 6: Modal shows/hides based on selectedBook state */}
+      {/* Modal shows/hides based on selectedBook state */}
       <Modal
         isOpen={selectedBook !== null}
         onClose={() => setSelectedBook(null)}

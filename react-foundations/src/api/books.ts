@@ -1,12 +1,9 @@
 import type { Book } from "../types";
 
-// Drill Set 5: fetch data from a REST API endpoint using fetch()
-// Using Open Library search API — no auth required
 const OPEN_LIBRARY_URL =
   "https://openlibrary.org/search.json?q=classic+fiction&limit=6&fields=key,title,author_name,first_publish_year,cover_i";
 
 export const fetchBooks = async (signal?: AbortSignal): Promise<Book[]> => {
-  // Drill Set 5: fetch with AbortSignal so callers can clean up
   const response = await fetch(OPEN_LIBRARY_URL, { signal });
 
   if (!response.ok) {
@@ -17,7 +14,7 @@ export const fetchBooks = async (signal?: AbortSignal): Promise<Book[]> => {
 
   const json = await response.json();
 
-  // Map Open Library shape → our Book interface
+  // Map Open Library shape - our Book interface
   return json.docs.map(
     (doc: {
       key: string;

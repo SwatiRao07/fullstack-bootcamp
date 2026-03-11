@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
-// Drill Set 2: TypeScript interface for prop types
 interface BookCardProps {
   id: string;
   title: string;
   author: string;
   year: number;
-  isAvailable?: boolean; // optional with default
+  isAvailable?: boolean; 
   coverImage?: string;
   onToggleAvailability: (id: string) => void;
   onViewDetails: (book: {
@@ -16,10 +15,9 @@ interface BookCardProps {
     year: number;
     isAvailable: boolean;
     coverImage?: string;
-  }) => void; // Drill Set 6
+  }) => void; 
 }
 
-// Drill Set 2: destructuring props directly in function parameters + default value
 export const BookCard: React.FC<BookCardProps> = ({
   id,
   title,
@@ -30,11 +28,9 @@ export const BookCard: React.FC<BookCardProps> = ({
   onToggleAvailability,
   onViewDetails,
 }) => {
-  // Drill Set 3: useState to manage availability toggle locally inside BookCard
   const [available, setAvailable] = useState(isAvailable);
 
   const handleToggle = () => {
-    // Drill Set 3: never mutate state directly — use setter with new value
     setAvailable((prev) => !prev);
     onToggleAvailability(id);
   };
@@ -55,7 +51,6 @@ export const BookCard: React.FC<BookCardProps> = ({
           <button className="toggle-btn" onClick={handleToggle}>
             Mark as {available ? "Borrowed" : "Available"}
           </button>
-          {/* Drill Set 6: opens Modal via onViewDetails callback */}
           <button
             className="toggle-btn"
             onClick={() =>

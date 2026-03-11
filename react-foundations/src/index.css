@@ -1,6 +1,3 @@
-/* ================================================
-   DESIGN TOKENS
-   ================================================ */
 :root {
   --primary: #7c6af7;
   --primary-hover: #6a58e8;
@@ -27,9 +24,6 @@
   --sidebar-width: 300px;
 }
 
-/* ================================================
-   RESET & BASE
-   ================================================ */
 *,
 *::before,
 *::after {
@@ -66,16 +60,13 @@ input {
   font-family: var(--font);
 }
 
-/* ================================================
-   LAYOUT SHELL
-   ================================================ */
+
 .layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* --- Header --- */
 .header {
   position: sticky;
   top: 0;
@@ -133,7 +124,6 @@ input {
   background: var(--primary-soft);
 }
 
-/* --- Footer --- */
 .footer {
   border-top: 1px solid var(--border);
   padding: 1.25rem 2rem;
@@ -142,7 +132,6 @@ input {
   font-size: 0.8rem;
 }
 
-/* --- Main content wrapper --- */
 .main-content {
   flex: 1;
   padding: 1.5rem 2rem;
@@ -151,9 +140,6 @@ input {
   margin: 0 auto;
 }
 
-/* ================================================
-   DASHBOARD LAYOUT  (sidebar + main)
-   ================================================ */
 .dashboard-layout {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
@@ -161,9 +147,6 @@ input {
   align-items: start;
 }
 
-/* ================================================
-   SIDEBAR
-   ================================================ */
 .sidebar {
   position: sticky;
   top: calc(60px + 1.5rem);
@@ -172,7 +155,6 @@ input {
   gap: 1rem;
 }
 
-/* --- Stats row --- */
 .stats-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -214,9 +196,6 @@ input {
   margin: 0.25rem 0;
 }
 
-/* ================================================
-   LIBRARY MAIN AREA
-   ================================================ */
 .library-main {
   min-width: 0;
 }
@@ -242,9 +221,6 @@ input {
   color: var(--text-muted);
 }
 
-/* ================================================
-   BOOK GRID & CARD
-   ================================================ */
 .book-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -365,9 +341,6 @@ input {
   background: var(--primary-soft);
 }
 
-/* ================================================
-   USER PROFILE
-   ================================================ */
 .user-profile {
   display: flex;
   align-items: center;
@@ -417,9 +390,6 @@ input {
   font-weight: 600;
 }
 
-/* ================================================
-   COUNTER
-   ================================================ */
 .counter-component {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -466,9 +436,7 @@ input {
   color: var(--text-muted) !important;
 }
 
-/* ================================================
-   SEARCH
-   ================================================ */
+
 .search-filter {
   width: 100%;
   max-width: 340px;
@@ -497,9 +465,7 @@ input {
   box-shadow: 0 0 0 3px rgba(124, 106, 247, 0.12);
 }
 
-/* ================================================
-   ADD BOOK FORM (in sidebar)
-   ================================================ */
+
 .add-book-form h3 {
   font-size: 0.85rem;
   font-weight: 700;
@@ -575,9 +541,6 @@ input {
   padding: 1rem;
 }
 
-/* ================================================
-   LOADING SPINNER
-   ================================================ */
 .spinner-container {
   grid-column: 1 / -1;
   display: flex;
@@ -608,9 +571,6 @@ input {
   color: var(--text-muted);
 }
 
-/* ================================================
-   MODAL
-   ================================================ */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -660,9 +620,6 @@ input {
   padding: 1.5rem;
 }
 
-/* ================================================
-   ERROR BOUNDARY
-   ================================================ */
 .error-boundary {
   padding: 2rem;
   background: var(--danger-soft);
