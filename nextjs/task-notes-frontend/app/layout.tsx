@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/NavBar";
+import { Toaster } from "@/components/ui/toast";
 
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
@@ -18,12 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geist.variable} antialiased bg-slate-50 text-slate-900`}
+        className={`${geist.variable} antialiased`}
       >
         {/* Header / Nav */}
-        <header className="sticky top-0 z-50 bg-slate-800 shadow-md">
+        <header className="sticky top-0 z-50 bg-slate-900 text-white shadow-md dark:bg-black border-b dark:border-slate-800">
           <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-            <span className="text-white font-bold text-xl tracking-tight">
+            <span className="font-bold text-xl tracking-tight">
                Task Notes
             </span>
             <NavBar />
@@ -36,10 +37,12 @@ export default function RootLayout({
         </main>
 
         {/* Footer */}
-        <footer className="bg-slate-100 border-t border-slate-200 py-6 text-center text-slate-500 text-sm">
-          <p>&copy;Task Notes App. All rights reserved.</p>
+        <footer className="bg-muted/30 border-t border-border py-8 text-center text-muted-foreground text-sm">
+          <p>&copy; {new Date().getFullYear()} Task Notes App. All rights reserved.</p>
         </footer>
+        <Toaster />
       </body>
     </html>
   );
 }
+

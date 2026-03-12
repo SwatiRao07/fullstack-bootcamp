@@ -1,18 +1,21 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+"use client";
 
-export const metadata: Metadata = {
-  title: "All Tasks - Task Notes App",
-  description: "Browse and manage all your tasks in one place.",
-};
+import { useState, useEffect } from "react";
+import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedTaskCard } from "@/components/AnimatedTaskCard";
+import { Task } from "@/lib/types";
 
-const SAMPLE_TASKS = [
+const SAMPLE_TASKS: Task[] = [
   {
     id: "1",
     title: "Set up Next.js project",
     description: "Initialise the task-notes-frontend project with App Router.",
     status: "done",
     priority: "high",
+    createdAt: new Date().toISOString(),
+    completed: true,
   },
   {
     id: "2",
@@ -21,6 +24,8 @@ const SAMPLE_TASKS = [
       "Create pages for home, about, and tasks using the app/ directory.",
     status: "done",
     priority: "high",
+    createdAt: new Date().toISOString(),
+    completed: true,
   },
   {
     id: "3",
@@ -29,6 +34,8 @@ const SAMPLE_TASKS = [
       "Add a root layout with header, nav, and footer plus a nested tasks layout.",
     status: "in-progress",
     priority: "medium",
+    createdAt: new Date().toISOString(),
+    completed: false,
   },
   {
     id: "4",
@@ -36,6 +43,8 @@ const SAMPLE_TASKS = [
     description: "Create [id] pages and catch-all category routes.",
     status: "in-progress",
     priority: "medium",
+    createdAt: new Date().toISOString(),
+    completed: false,
   },
   {
     id: "5",
@@ -44,70 +53,59 @@ const SAMPLE_TASKS = [
       "Add error.tsx, loading.tsx, and not-found.tsx to the tasks segment.",
     status: "todo",
     priority: "low",
+    createdAt: new Date().toISOString(),
+    completed: false,
   },
 ];
 
-const statusStyles: Record<string, string> = {
-  done: "bg-green-100 text-green-700",
-  "in-progress": "bg-yellow-100 text-yellow-700",
-  todo: "bg-slate-100 text-slate-600",
-};
-
-const priorityStyles: Record<string, string> = {
-  high: "text-red-500",
-  medium: "text-amber-500",
-  low: "text-slate-400",
-};
-
-// Drill 2 – Tasks list page
 export default function TasksPage() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    // Load tasks from localStorage
+    const savedTasks = localStorage.getItem('tasks');
+    const localTasks = savedTasks ? JSON.parse(savedTasks) : [];
+    
+    // Merge sample tasks with local tasks, deduplicating by ID
+    const allTasks = [...localTasks, ...SAMPLE_TASKS].filter((task, index, self) =>
+      index === self.findIndex((t) => t.id === task.id)
+    );
+    
+    setTasks(allTasks);
+  }, []);
+
   return (
-    <div>
-      <h1 className="text-3xl font-extrabold text-slate-800 mb-2 tracking-tight">
-        All Tasks
-      </h1>
-      <p className="text-slate-500 mb-8">
-        {SAMPLE_TASKS.length} tasks total - click any task to view its details.
-      </p>
+    <div className="container mx-auto p-4 sm:p-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight">Your Tasks</h1>
+        <Button asChild>
+          <Link href="/tasks/new">
+            Add New Task
+          </Link>
+        </Button>
+      </div>
 
-      <ul className="flex flex-col gap-4">
-        {SAMPLE_TASKS.map((task) => (
-          <li key={task.id}>
-            <Link
-              href={`/tasks/${task.id}`}
-              className="group flex items-start gap-4 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-200"
-            >
-
-              <span
-                className={`mt-1 text-lg font-bold ${priorityStyles[task.priority]}`}
-                title={`Priority: ${task.priority}`}
-              >
-                ●
-              </span>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-3 mb-1">
-                  <h2 className="text-slate-800 font-semibold group-hover:text-indigo-600 transition-colors truncate">
-                    {task.title}
-                  </h2>
-                  <span
-                    className={`text-xs font-medium px-2 py-0.5 rounded-full shrink-0 ${statusStyles[task.status]}`}
-                  >
-                    {task.status}
-                  </span>
-                </div>
-                <p className="text-slate-500 text-sm truncate">
-                  {task.description}
-                </p>
-              </div>
-
-              <span className="text-slate-300 group-hover:text-indigo-400 transition-colors text-xl self-center">
-                →
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {tasks.length === 0 ? (
+        <Card className="text-center py-12">
+          <CardContent>
+            <p className="text-muted-foreground mb-4">No tasks yet!</p>
+            <Button asChild variant="outline">
+              <Link href="/tasks/new">
+                Create your first task
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid gap-4">
+          {tasks.map((task, index) => (
+            <AnimatedTaskCard key={task.id} task={task} index={index} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
+
+

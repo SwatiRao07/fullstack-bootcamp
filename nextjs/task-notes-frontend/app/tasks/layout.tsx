@@ -1,4 +1,3 @@
-// Drill 3 – Nested Layout for /tasks/**
 export default function TasksLayout({
   children,
 }: {
@@ -7,13 +6,13 @@ export default function TasksLayout({
   return (
     <div>
       {/* Section label bar */}
-      <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-200">
+      <div className="flex items-center gap-3 mb-8 pb-4 border-b border-border">
         <span className="text-2xl">📋</span>
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Section
           </h2>
-          <p className="text-slate-700 font-semibold text-lg leading-tight">
+          <p className="text-foreground font-semibold text-lg leading-tight">
             Tasks
           </p>
         </div>
@@ -24,3 +23,4 @@ export default function TasksLayout({
     </div>
   );
 }
+
