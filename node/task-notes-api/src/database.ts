@@ -45,4 +45,25 @@ export class UserDatabase {
     const stmt = this.db.prepare('SELECT * FROM users WHERE id = ?');
     return stmt.get(id) as User | null;
   }
+
+  updateUser(id: number, data: { email?: string | undefined; role?: 'user' | 'admin' | undefined }): User | null {
+    const sets: string[] = [];
+    const values: any[] = [];
+
+    if (data.email) {
+      sets.push('email = ?');
+      values.push(data.email);
+    }
+    if (data.role) {
+      sets.push('role = ?');
+      values.push(data.role);
+    }
+
+    if (sets.length === 0) return this.getUserById(id);
+
+    values.push(id);
+    const stmt = this.db.prepare(`UPDATE users SET ${sets.join(', ')} WHERE id = ?`);
+    stmt.run(...values);
+    return this.getUserById(id);
+  }
 }

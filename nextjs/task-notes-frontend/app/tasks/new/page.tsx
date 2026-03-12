@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Link from 'next/link';
 import { toast } from "sonner";
 import { Task } from "@/lib/types";
+import { apiFetch } from "@/lib/api";
 
 export default function NewTaskPage() {
   const router = useRouter();
@@ -20,32 +21,28 @@ export default function NewTaskPage() {
   async function handleAction(formData: FormData) {
     setIsSubmitting(true);
     
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const priority = formData.get('priority') as "low" | "medium" | "high";
 
-    const newTask: Task = {
-      id: Math.random().toString(36).substring(2, 9),
-      title,
-      description,
-      priority,
-      status: 'todo',
-      createdAt: new Date().toISOString(),
-      completed: false
-    };
+    try {
+      await apiFetch('/tasks', {
+        method: 'POST',
+        body: JSON.stringify({
+          title,
+          description,
+          priority,
+          completed: false
+        }),
+      });
 
-    // Save to localStorage
-    const savedTasks = localStorage.getItem('tasks');
-    const tasks = savedTasks ? JSON.parse(savedTasks) : [];
-    localStorage.setItem('tasks', JSON.stringify([newTask, ...tasks]));
-
-    toast.success("Task created successfully!");
-    
-    setIsSubmitting(false);
-    router.push('/tasks');
+      toast.success("Task created successfully!");
+      router.push('/tasks');
+    } catch (error: any) {
+      toast.error(error.message || "Failed to create task");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (

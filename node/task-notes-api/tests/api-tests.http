@@ -1,0 +1,50 @@
+@baseUrl = http://localhost:3000
+
+### 1. Health Check
+# Checks if the API is running and can connect to Redis/Database
+GET {{baseUrl}}/health
+
+### 2. Metrics
+# View internal API metrics
+GET {{baseUrl}}/metrics
+
+### 3. Register User
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### 4. Login User
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### Store the token from the login response
+@authToken = {{login.response.body.token}}
+
+### 5. Create Task (Authenticated)
+POST {{baseUrl}}/api/tasks
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Test Task from HTTP",
+    "description": "Verifying backend logic",
+    "priority": "high"
+}
+
+### 6. List Tasks
+GET {{baseUrl}}/api/tasks
+Authorization: Bearer {{authToken}}
+
+### 7. Get User Profile
+GET {{baseUrl}}/api/users/profile
+Authorization: Bearer {{authToken}}

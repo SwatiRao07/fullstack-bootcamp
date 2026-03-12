@@ -12,6 +12,8 @@ import { createAuthMiddleware } from './auth/middleware.js';
 import { AuthService } from './auth/service.js';
 import { HealthChecker } from './monitoring.js';
 import { MetricsCollector } from './metrics.js';
+import { UserDatabase } from './database.js';
+import { createUserRouter } from './routes/users.js';
 
 export class TaskServer {
   private app: Express;
@@ -23,7 +25,8 @@ export class TaskServer {
     private emitter: TaskEventEmitter,
     private authService: AuthService,
     private healthChecker: HealthChecker,
-    private metrics: MetricsCollector
+    private metrics: MetricsCollector,
+    private userDb: UserDatabase
   ) {
     this.app = express();
     this.setupApp();
@@ -66,6 +69,7 @@ export class TaskServer {
     // Protected routes
     const authMiddleware = createAuthMiddleware(this.authService);
     this.app.use('/api/tasks', authMiddleware, createTaskRouter(this.storage, this.emitter));
+    this.app.use('/api/users', authMiddleware, createUserRouter(this.userDb));
 
     // Error handling
     this.app.use((err: any, req: Request, res: Response, next: NextFunction) => {

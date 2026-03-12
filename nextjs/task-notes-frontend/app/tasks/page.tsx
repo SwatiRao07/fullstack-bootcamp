@@ -2,77 +2,63 @@
 
 import { useState, useEffect } from "react";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedTaskCard } from "@/components/AnimatedTaskCard";
 import { Task } from "@/lib/types";
-
-const SAMPLE_TASKS: Task[] = [
-  {
-    id: "1",
-    title: "Set up Next.js project",
-    description: "Initialise the task-notes-frontend project with App Router.",
-    status: "done",
-    priority: "high",
-    createdAt: new Date().toISOString(),
-    completed: true,
-  },
-  {
-    id: "2",
-    title: "Implement file-based routing",
-    description:
-      "Create pages for home, about, and tasks using the app/ directory.",
-    status: "done",
-    priority: "high",
-    createdAt: new Date().toISOString(),
-    completed: true,
-  },
-  {
-    id: "3",
-    title: "Build shared layouts",
-    description:
-      "Add a root layout with header, nav, and footer plus a nested tasks layout.",
-    status: "in-progress",
-    priority: "medium",
-    createdAt: new Date().toISOString(),
-    completed: false,
-  },
-  {
-    id: "4",
-    title: "Add dynamic routes",
-    description: "Create [id] pages and catch-all category routes.",
-    status: "in-progress",
-    priority: "medium",
-    createdAt: new Date().toISOString(),
-    completed: false,
-  },
-  {
-    id: "5",
-    title: "Error handling & loading states",
-    description:
-      "Add error.tsx, loading.tsx, and not-found.tsx to the tasks segment.",
-    status: "todo",
-    priority: "low",
-    createdAt: new Date().toISOString(),
-    completed: false,
-  },
-];
+import { apiFetch } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    // Load tasks from localStorage
-    const savedTasks = localStorage.getItem('tasks');
-    const localTasks = savedTasks ? JSON.parse(savedTasks) : [];
-    
-    // Merge sample tasks with local tasks, deduplicating by ID
-    const allTasks = [...localTasks, ...SAMPLE_TASKS].filter((task, index, self) =>
-      index === self.findIndex((t) => t.id === task.id)
+    async function loadTasks() {
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await apiFetch('/tasks');
+        setTasks(response.data);
+      } catch (error) {
+        console.error('Failed to load tasks:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadTasks();
+  }, [user]);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto p-4 sm:p-8 flex items-center justify-center min-h-[50vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
     );
-    
-    setTasks(allTasks);
-  }, []);
+  }
+
+  if (!user) {
+    return (
+      <div className="container mx-auto p-4 sm:p-8 text-center">
+        <h1 className="text-3xl font-bold mb-6">Your Tasks</h1>
+        <Card className="py-12">
+          <CardContent>
+            <p className="text-muted-foreground mb-4">Please login to view your tasks.</p>
+            <Button asChild>
+              <Link href="/login">Login Now</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4 sm:p-8">

@@ -28,7 +28,7 @@ async function bootstrap() {
   const workers = setupWorkers(config.redisUrl);
 
   // Initialize Server
-  const server = new TaskServer(config, storage, emitter, authService, healthChecker, metrics);
+  const server = new TaskServer(config, storage, emitter, authService, healthChecker, metrics, userDb);
 
   // Start Server
   await server.start();

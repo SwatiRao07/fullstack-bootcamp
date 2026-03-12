@@ -28,10 +28,10 @@ describe('Tasks API', () => {
     const emitter = new TaskEventEmitter();
     const userDb = new UserDatabase(currentTestDbPath);
     const authService = new AuthService(userDb, config);
-    const healthChecker = new HealthChecker();
+    const healthChecker = new HealthChecker(config.redisUrl);
     const metrics = new MetricsCollector();
 
-    server = new TaskServer(config, storage, emitter, authService, healthChecker, metrics);
+    server = new TaskServer(config, storage, emitter, authService, healthChecker, metrics, userDb);
 
     // Register and login to get token
     await authService.register('test@example.com', 'password123');

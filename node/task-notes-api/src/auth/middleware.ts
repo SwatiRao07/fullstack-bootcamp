@@ -6,7 +6,7 @@ export interface AuthRequest extends Request {
 }
 
 export function createAuthMiddleware(authService: AuthService) {
-  return (req: AuthRequest, res: Response, next: NextFunction) => {
+  return async (req: AuthRequest, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ error: 'Unauthorized', message: 'Missing or invalid token' });
@@ -17,6 +17,11 @@ export function createAuthMiddleware(authService: AuthService) {
       return res.status(401).json({ error: 'Unauthorized', message: 'Missing token' });
     }
     try {
+      const isBlacklisted = await authService.isBlacklisted(token);
+      if (isBlacklisted) {
+        return res.status(401).json({ error: 'Unauthorized', message: 'Token has been revoked' });
+      }
+
       const payload = authService.verifyToken(token);
       req.user = payload;
       next();

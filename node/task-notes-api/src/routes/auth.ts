@@ -33,9 +33,28 @@ export function createAuthRouter(authService: AuthService): Router {
       }
 
       const token = await authService.login(result.data.email, result.data.password);
-      res.json({ token });
+      const payload = authService.verifyToken(token);
+      res.json({ token, user: { id: payload.userId, email: payload.email } });
     } catch (error: any) {
       res.status(401).json({ error: error.message });
+    }
+  });
+
+  router.post('/logout', async (req: Request, res: Response) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(400).json({ error: 'Missing token' });
+      }
+      const parts = authHeader.split(' ');
+      const token = parts[1];
+      if (!token) {
+        return res.status(400).json({ error: 'Missing token' });
+      }
+      await authService.logout(token);
+      res.json({ message: 'Logged out successfully' });
+    } catch (error: any) {
+      res.status(500).json({ error: 'Failed to logout' });
     }
   });
 
