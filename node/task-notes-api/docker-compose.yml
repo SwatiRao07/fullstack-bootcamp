@@ -2,7 +2,7 @@ services:
   api:
     build: .
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
       - NODE_ENV=production
       - REDIS_URL=redis://redis:6379
@@ -10,9 +10,9 @@ services:
     depends_on:
       - redis
     volumes:
-      - .data:/usr/src/app/data
+      - ./data:/usr/src/app/data
 
   redis:
     image: redis:alpine
     ports:
-      - '6379:6379'
+      - "6379:6379"
