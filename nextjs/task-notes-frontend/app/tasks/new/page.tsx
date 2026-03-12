@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { CustomButton } from "@/components/ui/custom-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -95,9 +96,9 @@ export default function NewTaskPage() {
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button type="submit" className="flex-1" disabled={isSubmitting}>
+              <CustomButton type="submit" intent="success" glow className="flex-1" disabled={isSubmitting}>
                 {isSubmitting ? "Creating..." : "Create Task"}
-              </Button>
+              </CustomButton>
               <Button type="button" variant="outline" className="flex-1" asChild>
                 <Link href="/tasks">
                    Cancel

@@ -9,10 +9,7 @@ export async function createTask(formData: FormData) {
 
   console.log('Creating task:', { title, description, priority });
 
-  // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 1000));
-
-  // In a real app, you would save to database here
 
   redirect('/tasks');
 }
