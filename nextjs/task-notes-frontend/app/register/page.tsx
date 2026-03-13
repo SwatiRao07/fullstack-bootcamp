@@ -20,6 +20,11 @@ export default function RegisterPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -36,7 +41,17 @@ export default function RegisterPage() {
       toast.success("Account created! Please login.");
       router.push('/login');
     } catch (error: any) {
-      toast.error(error.message || "Registration failed.");
+      let errorMessage = error.message || "Registration failed.";
+      
+      if (error.details) {
+        if (error.details.email?._errors?.length) {
+          errorMessage = `Email: ${error.details.email._errors.join(", ")}`;
+        } else if (error.details.password?._errors?.length) {
+          errorMessage = `Password: ${error.details.password._errors.join(", ")}`;
+        }
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

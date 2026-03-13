@@ -12,13 +12,27 @@ export interface JWTPayload {
 }
 
 export class AuthService {
-  private redis: Redis;
+  private redis: Redis | null = null;
 
   constructor(
     private userDb: UserDatabase,
     private config: AppConfig
   ) {
-    this.redis = new Redis(this.config.redisUrl);
+    if (this.config.redisUrl) {
+      try {
+        this.redis = new Redis(this.config.redisUrl, {
+          maxRetriesPerRequest: 0,
+          enableOfflineQueue: false,
+          lazyConnect: true,
+        });
+        this.redis.on('error', () => {
+          // Silently disable Redis if it's not available
+          this.redis = null;
+        });
+      } catch {
+        this.redis = null;
+      }
+    }
   }
 
   async register(email: string, password: string): Promise<User> {
@@ -62,12 +76,14 @@ export class AuthService {
   }
 
   async logout(token: string): Promise<void> {
-    const payload = this.verifyToken(token);
-    const ttl = 3600; // 1 hour matching the JWT expiration
+    if (!this.redis) return; // No Redis: logout handled client-side only
+    this.verifyToken(token);
+    const ttl = 3600;
     await this.redis.set(`blacklist:${token}`, 'true', 'EX', ttl);
   }
 
   async isBlacklisted(token: string): Promise<boolean> {
+    if (!this.redis) return false; // No Redis: tokens are never blacklisted
     const result = await this.redis.get(`blacklist:${token}`);
     return result === 'true';
   }

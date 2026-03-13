@@ -25,7 +25,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('auth_token');
+    // Read token from cookie (primary) or localStorage (fallback)
+    const cookieMatch = document.cookie.match(/(?:^|;\s*)auth_token=([^;]+)/);
+    const storedToken = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
     const storedUser = localStorage.getItem('auth_user');
 
     if (storedToken && storedUser) {
@@ -38,7 +40,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = (newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
-    localStorage.setItem('auth_token', newToken);
+    // Store token in a cookie so Server Components can access it
+    document.cookie = `auth_token=${encodeURIComponent(newToken)}; path=/; max-age=3600; SameSite=Lax`;
     localStorage.setItem('auth_user', JSON.stringify(newUser));
     router.push('/tasks');
   };
@@ -46,7 +49,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('auth_token');
+    // Clear both cookie and localStorage
+    document.cookie = 'auth_token=; path=/; max-age=0';
     localStorage.removeItem('auth_user');
     router.push('/login');
   };

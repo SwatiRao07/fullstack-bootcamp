@@ -23,7 +23,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
 
     try {
-      const data = await apiFetch('/auth/login', {
+      const data = await apiFetch<{ token: string; user: { id: number; email: string } }>('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });
@@ -31,7 +31,19 @@ export default function LoginPage() {
       login(data.token, data.user);
       toast.success("Welcome back!");
     } catch (error: any) {
-      toast.error(error.message || "Login failed. Please check your credentials.");
+      let errorMessage = error.message || "Login failed.";
+      
+      if (error.details) {
+        if (error.details.email?._errors?.length) {
+          errorMessage = `Email: ${error.details.email._errors.join(", ")}`;
+        } else if (error.details.password?._errors?.length) {
+          errorMessage = `Password: ${error.details.password._errors.join(", ")}`;
+        }
+      } else if (errorMessage === "Invalid credentials") {
+        errorMessage = "Invalid email or password";
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

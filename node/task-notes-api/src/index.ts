@@ -18,7 +18,7 @@ async function bootstrap() {
   // Initialize components
   const storage = new FileStorage(config.dataPath);
   const emitter = new TaskEventEmitter();
-  const userDb = new UserDatabase('./data/users.db');
+  const userDb = new UserDatabase(config.userDbPath);
   const authService = new AuthService(userDb, config);
   const healthChecker = new HealthChecker(config.redisUrl);
   const metrics = new MetricsCollector();
