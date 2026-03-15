@@ -1,3 +1,5 @@
+import path from 'path';
+import fs from 'fs/promises';
 import { logger } from './logger.js';
 import { loadConfig } from './config.js';
 import { TaskServer } from './server.js';
@@ -9,6 +11,7 @@ import { HealthChecker } from './monitoring.js';
 import { MetricsCollector } from './metrics.js';
 import { TaskScheduler } from './jobs/scheduler.js';
 import { setupWorkers } from './jobs/worker.js';
+import { existsSync } from 'fs';
 
 async function bootstrap() {
   let config;
@@ -40,6 +43,12 @@ async function bootstrap() {
     // Start Server
     await server.start();
 
+    // Ensure storage directory exists before watching
+    const dataDir = path.dirname(config.dataPath);
+    if (!existsSync(dataDir)) {
+      await fs.mkdir(dataDir, { recursive: true });
+    }
+
     // Watch for changes in storage
     storage.watchChanges(() => {
       logger.info('Storage changed, event emitted');
@@ -58,7 +67,12 @@ async function bootstrap() {
 
     logger.info('Application ready');
   } catch (error) {
-    logger.error({ error, stack: (error instanceof Error) ? error.stack : undefined }, 'Failed to start application');
+    const err = error instanceof Error ? error : new Error(String(error));
+    logger.error({ 
+      error: err.message, 
+      stack: err.stack,
+      cause: (err as any).cause 
+    }, 'Failed to start application');
     process.exit(1);
   }
 }

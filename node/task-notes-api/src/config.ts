@@ -23,6 +23,10 @@ export function loadConfig(): AppConfig {
   if (!port) {
     throw new Error('PORT environment variable is required');
   }
+  const parsedPort = parseInt(port, 10);
+  if (isNaN(parsedPort)) {
+    throw new Error(`PORT environment variable is not a valid number: ${port}`);
+  }
 
   const dataPath = process.env.DATA_PATH;
   if (!dataPath) {
@@ -40,7 +44,7 @@ export function loadConfig(): AppConfig {
   }
 
   return {
-    port: parseInt(port, 10),
+    port: parsedPort,
     logLevel: process.env.LOG_LEVEL || 'info',
     env: (process.env.NODE_ENV as 'development' | 'production' | 'test') || 'production',
     dataPath: dataPath,
