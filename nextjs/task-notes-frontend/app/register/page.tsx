@@ -41,13 +41,11 @@ export default function RegisterPage() {
 
     if (result && result.error) {
       toast.error(result.error);
+      setIsSubmitting(false);
     } else {
-      toast.success("Account created! Please login.");
-      // Usually redirects inside server action, but fallback just in case
-      router.push('/login');
+      toast.success("Account created! Redirecting...");
+      // The server action handles the redirect to /tasks
     }
-    
-    setIsSubmitting(false);
   }
 
   return (

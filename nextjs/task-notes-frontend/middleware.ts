@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
       await jwtVerify(token, JWT_SECRET);
       isValidToken = true;
     } catch (e) {
-      console.error('JWT Verification failed:', e);
+      console.error(`JWT Verification failed for token ${token.substring(0, 10)}...:`, e);
       // Token is invalid or expired
       const response = NextResponse.redirect(new URL('/login', request.url));
       response.cookies.delete('auth-token');

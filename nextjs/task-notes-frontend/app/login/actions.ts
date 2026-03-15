@@ -18,6 +18,10 @@ export async function login(formData: FormData) {
       body: JSON.stringify({ email, password }),
     });
 
+    if (!response.token) {
+      throw new Error('Authentication failed: No token received from server');
+    }
+
     const cookieStore = await cookies();
 
     // Store token in HTTP-only cookie
@@ -69,24 +73,29 @@ export async function register(formData: FormData) {
       body: JSON.stringify({ email, password }),
     });
 
-    const cookieStore = await cookies();
+    if (response.token) {
+      const cookieStore = await cookies();
 
-    cookieStore.set('auth-token', response.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7,
-      path: '/',
-    });
-    
-    // Store user info in a readable cookie
-    cookieStore.set('user', JSON.stringify(response.user), {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7,
-      path: '/',
-    });
+      cookieStore.set('auth-token', response.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+      });
+      
+      // Store user info in a readable cookie
+      cookieStore.set('user', JSON.stringify(response.user), {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+      });
+    } else {
+      // If no token (older backend), we just let it redirect to /login via the register page
+      return redirect('/login');
+    }
 
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to create account. Email may already exist.';
