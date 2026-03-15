@@ -24,11 +24,6 @@ export function loadConfig(): AppConfig {
     throw new Error('PORT environment variable is required');
   }
 
-  const nodeEnv = process.env.NODE_ENV;
-  if (!nodeEnv) {
-    throw new Error('NODE_ENV environment variable is required');
-  }
-
   const dataPath = process.env.DATA_PATH;
   if (!dataPath) {
     throw new Error('DATA_PATH environment variable is required');
@@ -47,7 +42,7 @@ export function loadConfig(): AppConfig {
   return {
     port: parseInt(port, 10),
     logLevel: process.env.LOG_LEVEL || 'info',
-    env: nodeEnv as 'development' | 'production' | 'test',
+    env: (process.env.NODE_ENV as 'development' | 'production' | 'test') || 'production',
     dataPath: dataPath,
     userDbPath: userDbPath,
     jwtSecret: jwtSecret,
