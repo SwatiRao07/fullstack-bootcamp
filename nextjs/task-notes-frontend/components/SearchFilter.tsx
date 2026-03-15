@@ -12,11 +12,12 @@ export function SearchFilter() {
   const [query, setQuery] = useState(searchParams.get('q') || '');
 
   // Sync state with URL changes (e.g. back button or clear search)
-  // This is the recommended pattern in React for adjusting state when props (or searchParams) change
-  const currentQ = searchParams.get('q') || '';
-  if (currentQ !== query && !isPending) {
-    setQuery(currentQ);
-  }
+  useEffect(() => {
+    const urlQuery = searchParams.get('q') || '';
+    if (urlQuery !== query) {
+      setQuery(urlQuery);
+    }
+  }, [searchParams]); // Only run when searchParams change
 
   // Debounce the search
   useEffect(() => {
