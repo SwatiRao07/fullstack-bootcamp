@@ -25,7 +25,7 @@ function getTokenFromCookie(cookieHeader?: string): string | null {
   const source =
     cookieHeader ??
     (typeof document !== 'undefined' ? document.cookie : '');
-  const match = source.match(/(?:^|;\s*)auth_token=([^;]+)/);
+  const match = source.match(/(?:^|;\s*)auth-token=([^;]+)/);
   return match ? decodeURIComponent(match[1]) : null;
 }
 
@@ -52,7 +52,7 @@ async function apiRequest<T>(
     if (response.status === 401) {
       // Clear bad token from cookie on client side
       if (typeof document !== 'undefined') {
-        document.cookie = 'auth_token=; path=/; max-age=0';
+        document.cookie = 'auth-token=; path=/; max-age=0';
         if (!window.location.pathname.startsWith('/login')) {
           window.location.href = '/login';
         }

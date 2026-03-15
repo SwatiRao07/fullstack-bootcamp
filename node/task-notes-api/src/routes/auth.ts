@@ -19,7 +19,12 @@ export function createAuthRouter(authService: AuthService): Router {
       }
 
       const user = await authService.register(result.data.email, result.data.password);
-      res.status(201).json({ id: user.id, email: user.email, role: user.role });
+      
+      // Auto-login after registration
+      const token = await authService.login(result.data.email, result.data.password);
+      const payload = authService.verifyToken(token);
+      
+      res.status(201).json({ token, user: { id: payload.userId, email: payload.email } });
     } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
