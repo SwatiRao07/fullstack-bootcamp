@@ -19,14 +19,39 @@ export function loadConfig(): AppConfig {
     throw new Error('JWT_SECRET environment variable is required');
   }
 
+  const port = process.env.PORT;
+  if (!port) {
+    throw new Error('PORT environment variable is required');
+  }
+
+  const nodeEnv = process.env.NODE_ENV;
+  if (!nodeEnv) {
+    throw new Error('NODE_ENV environment variable is required');
+  }
+
+  const dataPath = process.env.DATA_PATH;
+  if (!dataPath) {
+    throw new Error('DATA_PATH environment variable is required');
+  }
+
+  const userDbPath = process.env.USER_DB_PATH;
+  if (!userDbPath) {
+    throw new Error('USER_DB_PATH environment variable is required');
+  }
+
+  const corsOrigin = process.env.CORS_ORIGIN;
+  if (!corsOrigin) {
+    throw new Error('CORS_ORIGIN environment variable is required');
+  }
+
   return {
-    port: parseInt(process.env.PORT!, 10),
-    logLevel: process.env.LOG_LEVEL || 'info', // 'info' is a safe operational default, not a secret
-    env: (process.env.NODE_ENV as any)!,
-    dataPath: process.env.DATA_PATH!,
-    userDbPath: process.env.USER_DB_PATH!,
+    port: parseInt(port, 10),
+    logLevel: process.env.LOG_LEVEL || 'info',
+    env: nodeEnv as 'development' | 'production' | 'test',
+    dataPath: dataPath,
+    userDbPath: userDbPath,
     jwtSecret: jwtSecret,
     redisUrl: process.env.REDIS_URL || '', 
-    corsOrigin: process.env.CORS_ORIGIN!,
+    corsOrigin: corsOrigin,
   };
 }
