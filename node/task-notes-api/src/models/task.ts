@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const TaskSchema = z.object({
   id: z.string().uuid().optional(),
+  userId: z.number().optional(),
   title: z.string().min(1).max(100),
   description: z.string().max(500).optional(),
   completed: z.boolean().default(false),
