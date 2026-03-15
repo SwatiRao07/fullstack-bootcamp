@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import type { Express } from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import { Server } from 'http';
@@ -35,18 +36,12 @@ export class TaskServer {
   private setupApp(): void {
     this.app.use(express.json());
 
-    // Basic CORS middleware
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
-      res.header('Access-Control-Allow-Origin', this.config.corsOrigin);
-      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-      
-      if (req.method === 'OPTIONS') {
-        res.sendStatus(200);
-      } else {
-        next();
-      }
-    });
+    this.app.use(cors({
+      origin: this.config.corsOrigin,
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+    }));
 
     // Request logging and metrics
     this.app.use((req: Request, res: Response, next: NextFunction) => {

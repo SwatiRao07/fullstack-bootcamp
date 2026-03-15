@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import Link from 'next/link';
 import { toast } from "sonner";
-import { apiFetch } from "@/lib/api";
+import { register } from "../login/actions";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -32,29 +32,22 @@ export default function RegisterPage() {
 
     setIsSubmitting(true);
 
-    try {
-      await apiFetch('/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-      });
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
 
+    const result = await register(formData);
+
+    if (result && result.error) {
+      toast.error(result.error);
+    } else {
       toast.success("Account created! Please login.");
+      // Usually redirects inside server action, but fallback just in case
       router.push('/login');
-    } catch (error: any) {
-      let errorMessage = error.message || "Registration failed.";
-      
-      if (error.details) {
-        if (error.details.email?._errors?.length) {
-          errorMessage = `Email: ${error.details.email._errors.join(", ")}`;
-        } else if (error.details.password?._errors?.length) {
-          errorMessage = `Password: ${error.details.password._errors.join(", ")}`;
-        }
-      }
-      
-      toast.error(errorMessage);
-    } finally {
-      setIsSubmitting(false);
     }
+    
+    setIsSubmitting(false);
   }
 
   return (

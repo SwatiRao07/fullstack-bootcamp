@@ -1,52 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import Link from 'next/link';
 import { toast } from "sonner";
-import { apiFetch } from "@/lib/api";
-import { useAuth } from "@/lib/auth-context";
+import { login } from "./actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-  const { login } = useAuth();
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const data = await apiFetch<{ token: string; user: { id: number; email: string } }>('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-      });
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
 
-      login(data.token, data.user);
+    const result = await login(formData);
+
+    if (result && result.error) {
+      toast.error(result.error);
+    } else {
       toast.success("Welcome back!");
-    } catch (error: any) {
-      let errorMessage = error.message || "Login failed.";
-      
-      if (error.details) {
-        if (error.details.email?._errors?.length) {
-          errorMessage = `Email: ${error.details.email._errors.join(", ")}`;
-        } else if (error.details.password?._errors?.length) {
-          errorMessage = `Password: ${error.details.password._errors.join(", ")}`;
-        }
-      } else if (errorMessage === "Invalid credentials") {
-        errorMessage = "Invalid email or password";
-      }
-      
-      toast.error(errorMessage);
-    } finally {
-      setIsSubmitting(false);
     }
+    
+    setIsSubmitting(false);
   }
 
   return (

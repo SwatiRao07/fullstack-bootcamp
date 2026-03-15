@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-// Drill 5 – Not Found for an individual task (called by notFound() in [id]/page.tsx)
 export default function TaskNotFound() {
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">

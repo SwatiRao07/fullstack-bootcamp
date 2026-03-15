@@ -19,22 +19,29 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const storedUser = localStorage.getItem('auth_user');
+    try {
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const cookieMatch = document.cookie.match(/(?:^|;\s*)auth_token=([^;]+)/);
+    return cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
+  });
+
+  const [isLoading] = useState(false); // Can be false immediately if we initialize sync
+
   const router = useRouter();
 
   useEffect(() => {
-    // Read token from cookie (primary) or localStorage (fallback)
-    const cookieMatch = document.cookie.match(/(?:^|;\s*)auth_token=([^;]+)/);
-    const storedToken = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
-    const storedUser = localStorage.getItem('auth_user');
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    // Initial mount check if needed, but we already initialized sync.
+    // This effect is now empty to satisfy potential mount logic, or can be removed.
   }, []);
 
   const login = (newToken: string, newUser: User) => {

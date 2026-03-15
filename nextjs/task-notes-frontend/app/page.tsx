@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // Drill 6 – Static Metadata
 export const metadata: Metadata = {
@@ -12,10 +11,10 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="py-16">
-      <div className="flex flex-col items-center gap-4 mb-10">
+      {/* <div className="flex flex-col items-center gap-4 mb-10">
         <p className="text-sm text-muted-foreground">LoadingSpinner test:</p>
         <LoadingSpinner size={40} />
-      </div>
+      </div> */}
 
       {/* Hero */}
       <section className="text-center mb-14">

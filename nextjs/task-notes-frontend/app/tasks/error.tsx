@@ -1,7 +1,5 @@
 "use client";
 
-// Drill 5 – Error Boundary for /tasks segment
-// Must be a Client Component to use useEffect and receive the error prop
 export default function Error({
   error,
   reset,

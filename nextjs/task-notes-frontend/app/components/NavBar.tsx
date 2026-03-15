@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useAuth } from "@/lib/auth-context";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 
 export default function NavBar() {

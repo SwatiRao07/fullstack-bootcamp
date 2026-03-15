@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from 'next/link';
 import { Task } from '@/lib/types';
+import { TaskActions } from './task-actions';
 
 interface TaskCardProps {
   task: Task;
@@ -21,7 +22,7 @@ export function TaskCard({ task }: TaskCardProps) {
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <div className="space-y-1">
-            <h3 className="text-lg font-semibold leading-none tracking-tight">
+            <h3 className={`text-lg font-semibold leading-none tracking-tight ${task.completed ? 'line-through text-muted-foreground' : ''}`}>
               {task.title}
             </h3>
             <p className="text-sm text-muted-foreground">
@@ -46,17 +47,21 @@ export function TaskCard({ task }: TaskCardProps) {
       <Separator />
 
       <CardContent className="pt-3">
-        <div className="flex justify-end gap-2">
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/tasks/${task.id}`}>
-              View Details
-            </Link>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/tasks/${task.id}/edit`}>
-              Edit
-            </Link>
-          </Button>
+        <div className="flex justify-between items-center gap-2">
+          <TaskActions task={task} />
+          
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/tasks/${task.id}`}>
+                View Details
+              </Link>
+            </Button>
+            <Button variant="secondary" size="sm" asChild>
+              <Link href={`/tasks/${task.id}/edit`}>
+                Edit
+              </Link>
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

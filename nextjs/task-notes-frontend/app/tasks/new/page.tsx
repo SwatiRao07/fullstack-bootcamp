@@ -1,50 +1,8 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { CustomButton } from "@/components/ui/custom-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from 'next/link';
-import { toast } from "sonner";
-import { Task } from "@/lib/types";
-import { apiFetch } from "@/lib/api";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { TaskForm } from '@/components/task-form';
+import { createTaskAction } from '@/lib/actions';
 
 export default function NewTaskPage() {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  async function handleAction(formData: FormData) {
-    setIsSubmitting(true);
-    
-    const title = formData.get('title') as string;
-    const description = formData.get('description') as string;
-    const priority = formData.get('priority') as "low" | "medium" | "high";
-
-    try {
-      await apiFetch('/tasks', {
-        method: 'POST',
-        body: JSON.stringify({
-          title,
-          description,
-          priority,
-          completed: false
-        }),
-      });
-
-      toast.success("Task created successfully!");
-      router.push('/tasks');
-    } catch (error: any) {
-      toast.error(error.message || "Failed to create task");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
   return (
     <div className="container mx-auto p-4 sm:p-8 max-w-2xl">
       <Card>
@@ -56,56 +14,9 @@ export default function NewTaskPage() {
         </CardHeader>
 
         <CardContent>
-          <form action={handleAction} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="title">Task Title</Label>
-              <Input
-                id="title"
-                name="title"
-                placeholder="Enter task title..."
-                required
-                className="w-full"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                name="description"
-                placeholder="Add task details..."
-                className="min-h-25 resize-none"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="priority">Priority</Label>
-              <Select name="priority" defaultValue="medium">
-                <SelectTrigger>
-                  <SelectValue placeholder="Select priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex gap-3 pt-4">
-              <CustomButton type="submit" intent="success" glow className="flex-1" disabled={isSubmitting}>
-                {isSubmitting ? "Creating..." : "Create Task"}
-              </CustomButton>
-              <Button type="button" variant="outline" className="flex-1" asChild>
-                <Link href="/tasks">
-                   Cancel
-                </Link>
-              </Button>
-            </div>
-          </form>
+          <TaskForm action={createTaskAction} submitLabel="Create Task" />
         </CardContent>
       </Card>
     </div>
   );
 }
-

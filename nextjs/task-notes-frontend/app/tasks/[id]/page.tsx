@@ -3,22 +3,24 @@
  * Server component that fetches a single task by ID.
  * Uses notFound() for missing tasks and generateMetadata() for SEO.
  */
-import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { api } from '@/lib/api';
+import { apiClient } from '@/lib/api-client';
+
+import { TaskActions } from '@/components/task-actions';
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
-// Drill 3: Dynamic metadata based on real task data
+// ... existing generateMetadata ...
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   try {
-    const cookieStore = await cookies();
-    const task = await api.getTask(id, { cookieHeader: cookieStore.toString() });
+    const task = await apiClient.getTask(id);
+  
     return {
       title: `${task.title} — Task Notes App`,
       description: task.description ?? `Task created on ${new Date(task.createdAt).toLocaleDateString()}`,
@@ -49,16 +51,14 @@ const priorityStyles: Record<string, string> = {
 
 export default async function TaskDetailPage({ params }: Props) {
   const { id } = await params;
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore.toString();
 
   // Drill 3: Fetch task on the server
   let task;
   try {
-    task = await api.getTask(id, { cookieHeader });
-  } catch (err: any) {
+    task = await apiClient.getTask(id);
+  } catch (err) {
     // 404 from API → show Next.js not-found page
-    if (err?.status === 404) notFound();
+    if (err && typeof err === 'object' && 'status' in err && err.status === 404) notFound();
     // Other errors → rethrow so error.tsx catches it
     throw err;
   }
@@ -107,13 +107,23 @@ export default async function TaskDetailPage({ params }: Props) {
       </div>
 
       {/* Actions */}
-      <div className="mt-4 flex gap-3">
-        <Link
-          href="/tasks"
-          className="flex-1 text-center px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-600 transition-all text-sm font-medium"
-        >
-          ← Back to all tasks
-        </Link>
+      <div className="mt-6 flex flex-wrap gap-4 items-center justify-between">
+        <TaskActions task={task} variant="detail" />
+        
+        <div className="flex gap-3">
+          <Link
+            href={`/tasks/${task.id}/edit`}
+            className="px-6 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-colors text-sm font-medium shadow-sm"
+          >
+            Edit Task
+          </Link>
+          <Link
+            href="/tasks"
+            className="px-6 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors text-sm font-medium"
+          >
+            Back to List
+          </Link>
+        </div>
       </div>
     </div>
   );

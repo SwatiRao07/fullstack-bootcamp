@@ -1,11 +1,4 @@
-/**
- * Drill 1: API Client Setup
- * Reusable, typed API client for the Task Notes API.
- * Supports both client-side (reads from cookie) and server-side fetching.
- */
-import { env } from './env';
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { config } from './config';
 
 export interface ApiTask {
   id: string;
@@ -28,9 +21,6 @@ export interface PaginatedResponse<T> {
   limit: number;
 }
 
-// ─── Token Helpers ────────────────────────────────────────────────────────────
-
-/** Read token from cookies — works in both browser and server (Node.js) */
 function getTokenFromCookie(cookieHeader?: string): string | null {
   const source =
     cookieHeader ??
@@ -39,20 +29,13 @@ function getTokenFromCookie(cookieHeader?: string): string | null {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-// ─── Core Fetch ───────────────────────────────────────────────────────────────
-
-/**
- * Core fetch wrapper. Used by both client & server:
- * - In browser: reads cookie from document.cookie
- * - In Server Component: pass { cookieHeader } to forward request cookies
- */
 async function apiRequest<T>(
   endpoint: string,
   options: RequestInit & { cookieHeader?: string } = {}
 ): Promise<T> {
   const { cookieHeader, ...fetchOptions } = options;
   const token = getTokenFromCookie(cookieHeader);
-  const url = `${env.API_URL}${endpoint}`;
+  const url = `${config.apiUrl}${endpoint}`;
 
   try {
     const response = await fetch(url, {
@@ -78,9 +61,16 @@ async function apiRequest<T>(
     }
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      const message = errorData.error || errorData.message || `API Error: ${response.statusText}`;
-      const err = new Error(message) as ApiError & { details?: any };
+      let errorData: Record<string, unknown> = {};
+      try {
+        errorData = await response.json();
+      } catch {
+        // Fallback for non-JSON errors
+      }
+      const errorMsg = (typeof errorData?.error === 'string' ? errorData.error : '') || 
+                       (typeof errorData?.message === 'string' ? errorData.message : '');
+      const message = errorMsg || `API Error: ${response.statusText}`;
+      const err = new Error(String(message)) as ApiError & { details?: unknown };
       err.status = response.status;
       err.details = errorData.details;
       throw err;
@@ -89,32 +79,19 @@ async function apiRequest<T>(
     if (response.status === 204) return null as T;
     return response.json();
   } catch (error) {
-    if (env.IS_DEV) console.error(`[api] ${fetchOptions.method ?? 'GET'} ${url} failed:`, error);
+    if (config.isDevelopment) console.error(`[api] ${fetchOptions.method ?? 'GET'} ${url} failed:`, error);
     throw error;
   }
 }
 
-// ─── Typed API Object ─────────────────────────────────────────────────────────
-
-/**
- * Drill 1: Typed API client. Use in Client Components normally.
- * For Server Components, pass the cookieHeader from headers().
- *
- * @example Server Component
- *   import { cookies } from 'next/headers';
- *   const cookieHeader = (await cookies()).toString();
- *   const tasks = await api.getTasks({ cookieHeader });
- */
 export const api = {
-  /** Get all tasks (paginated) */
+
   getTasks: (options: { cookieHeader?: string } = {}) =>
     apiRequest<PaginatedResponse<ApiTask>>('/tasks', options),
 
-  /** Get a single task by ID */
   getTask: (id: string, options: { cookieHeader?: string } = {}) =>
     apiRequest<ApiTask>(`/tasks/${id}`, options),
 
-  /** Create a new task */
   createTask: (
     task: Pick<ApiTask, 'title' | 'priority'> & { description?: string },
     options: { cookieHeader?: string } = {}
@@ -125,7 +102,6 @@ export const api = {
       ...options,
     }),
 
-  /** Update an existing task */
   updateTask: (
     id: string,
     updates: Partial<Omit<ApiTask, 'id' | 'createdAt'>>,
@@ -137,7 +113,6 @@ export const api = {
       ...options,
     }),
 
-  /** Delete a task */
   deleteTask: (id: string, options: { cookieHeader?: string } = {}) =>
     apiRequest<void>(`/tasks/${id}`, {
       method: 'DELETE',
@@ -145,5 +120,4 @@ export const api = {
     }),
 };
 
-// ─── Legacy client-side helper (kept for backwards compatibility) ──────────────
 export { apiRequest as apiFetch };
