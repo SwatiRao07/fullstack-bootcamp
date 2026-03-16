@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 // Drill 6 – Static Metadata
 export const metadata: Metadata = {
@@ -24,6 +25,16 @@ export default function AboutPage() {
          including file-based routing, layouts, dynamic routes, error
         boundaries, loading states, and SEO metadata.
       </p>
+
+      <div className="mb-8 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+        <OptimizedImage 
+          src="/preview.png" 
+          alt="Task Notes App Preview" 
+          width={800} 
+          height={450}
+          priority
+        />
+      </div>
 
       {/* Technology Table */}
       <h2 className="text-xl font-bold text-slate-700 mb-3">Tech Stack</h2>

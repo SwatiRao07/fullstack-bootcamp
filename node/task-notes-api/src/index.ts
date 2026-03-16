@@ -18,41 +18,38 @@ async function bootstrap() {
   try {
     config = loadConfig();
   } catch (error) {
-    const err = error instanceof Error ? error : new Error(String(error));
-    console.error('CONFIG ERROR:', err.message);
-    logger.error({ error: err.message }, 'Failed to load configuration');
+    logger.error({ error }, 'Failed to load configuration');
     process.exit(1);
   }
 
   logger.info({ port: config.port, env: config.env }, 'Application starting...');
 
   try {
-    console.error('[INIT] FileStorage');
+    // Initialize components
     const storage = new FileStorage(config.dataPath);
-    console.error('[INIT] TaskEventEmitter');
     const emitter = new TaskEventEmitter();
-    console.error('[INIT] UserDatabase');
     const userDb = new UserDatabase(config.userDbPath);
-    console.error('[INIT] AuthService');
     const authService = new AuthService(userDb, config);
-    console.error('[INIT] HealthChecker');
     const healthChecker = new HealthChecker(config.redisUrl);
-    console.error('[INIT] MetricsCollector');
     const metrics = new MetricsCollector();
-    console.error('[INIT] TaskScheduler');
+
+    // Initialize Jobs
     const scheduler = new TaskScheduler(config.redisUrl);
-    console.error('[INIT] setupWorkers');
     const workers = setupWorkers(config.redisUrl);
-    console.error('[INIT] TaskServer');
+
+    // Initialize Server
     const server = new TaskServer(config, storage, emitter, authService, healthChecker, metrics, userDb);
-    console.error('[INIT] server.start()');
+
+    // Start Server
     await server.start();
 
+    // Ensure storage directory exists before watching
     const dataDir = path.dirname(config.dataPath);
     if (!existsSync(dataDir)) {
       await fs.mkdir(dataDir, { recursive: true });
     }
 
+    // Watch for changes in storage
     storage.watchChanges(() => {
       logger.info('Storage changed, event emitted');
     });
@@ -71,8 +68,6 @@ async function bootstrap() {
     logger.info('Application ready');
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.error('STARTUP ERROR:', err.message);
-    console.error('STACK:', err.stack);
     logger.error({ 
       error: err.message, 
       stack: err.stack,
@@ -83,7 +78,6 @@ async function bootstrap() {
 }
 
 bootstrap().catch((err) => {
-  console.error('UNHANDLED ERROR:', err);
   logger.error({ error: err, stack: (err instanceof Error) ? err.stack : undefined }, 'Unhandled bootstrap error');
   process.exit(1);
 });

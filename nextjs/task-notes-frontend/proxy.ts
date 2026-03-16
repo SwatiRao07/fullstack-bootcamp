@@ -13,7 +13,7 @@ const protectedRoutes = ['/tasks', '/profile', '/settings'];
 // Routes that should redirect to tasks if already authenticated
 const authRoutes = ['/login', '/register'];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const token = request.cookies.get('auth-token')?.value;
 
@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
   let isValidToken = false;
   if (token) {
     try {
-      // Typically, jwtVerify is for validating JSON Web Tokens natively on edge runtimes like Next.js middleware.
+      // Typically, jwtVerify is for validating JSON Web Tokens natively on edge runtimes like Next.js proxy.
       await jwtVerify(token, JWT_SECRET);
       isValidToken = true;
     } catch (e) {

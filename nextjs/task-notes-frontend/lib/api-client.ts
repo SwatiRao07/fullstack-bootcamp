@@ -20,7 +20,7 @@ async function authenticatedRequest<T>(
   });
 
   if (response.status === 401) {
-    // Cannot delete cookies directly here without redirect, but middleware should handle this.
+    // Cannot delete cookies directly here without redirect, but proxy should handle this.
     // Throwing error for now as requested by instructions
     throw new Error('Authentication required');
   }
