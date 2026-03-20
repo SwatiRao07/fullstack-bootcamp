@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="styles/components.css">
 </head>
 <body class="app-layout">
-    <!-- Header -->
     <header class="app-header">
         <div class="flex items-center gap-2">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
@@ -30,7 +29,6 @@
         </div>
     </header>
 
-    <!-- Sidebar -->
     <aside class="app-sidebar">
         <ul class="sidebar-nav">
             <li>
@@ -62,7 +60,6 @@
         </ul>
     </aside>
 
-    <!-- Main Content -->
     <main class="app-main">
         <div class="page-header">
             <div class="page-intro">
@@ -75,21 +72,17 @@
             </button>
         </div>
 
-        <!-- Search Bar -->
         <div class="search-wrapper">
             <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" id="searchInput" class="form-input search-input" placeholder="Search tasks...">
         </div>
 
-        <!-- Task List -->
         <div id="taskList" class="task-list">
-            <!-- Skeleton Loading -->
             <div class="task-card" style="height: 200px; background-color: var(--bg-color); animation: pulse 1.5s infinite;"></div>
             <div class="task-card" style="height: 200px; background-color: var(--bg-color); animation: pulse 1.5s infinite;"></div>
             <div class="task-card" style="height: 200px; background-color: var(--bg-color); animation: pulse 1.5s infinite;"></div>
         </div>
 
-        <!-- Empty State -->
         <div id="emptyState" style="display: none; text-align: center; padding: 5rem 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1.5rem;">📋</div>
             <h3 style="margin-bottom: 0.5rem;">No tasks found</h3>
@@ -98,7 +91,6 @@
         </div>
     </main>
 
-    <!-- Task Modal -->
     <div class="modal-overlay" id="taskModal">
         <div class="modal">
             <div class="flex justify-between items-center mb-6">

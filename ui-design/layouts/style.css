@@ -1,8 +1,3 @@
-/* 
-  Drill 1 - Spacing System & Layout Foundation
-  ===========================================
-*/
-
 :root {
   /* Spacing Scale (4px base) */
   --space-1: 0.25rem; /* 4px */
@@ -43,7 +38,6 @@ body {
   flex-direction: column;
 }
 
-/* Drill 1 - Skeleton */
 .header {
   background: var(--white);
   border-bottom: 1px solid var(--border-light);
@@ -70,18 +64,12 @@ body {
   padding: 0 var(--space-4);
 }
 
-/* 
-  Drill 2 - Reusable Card Component
-  ===========================================
-*/
-
 .grid {
   display: grid;
   gap: var(--space-4);
 }
 
 .grid--cards {
-  /* repeat(auto-fit, minmax(220px, 1fr)) */
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   padding: var(--space-4) 0;
 }
@@ -132,11 +120,6 @@ body {
   color: var(--text-muted);
 }
 
-/* 
-  Drill 3 - Navigation Patterns
-  ===========================================
-*/
-
 .nav-container {
   display: flex;
   align-items: center;
@@ -150,7 +133,6 @@ body {
   text-decoration: none;
 }
 
-/* Horizontal Nav with Mobile Toggle */
 .nav-menu {
   display: flex;
   gap: var(--space-4);
@@ -175,7 +157,6 @@ body {
   outline-offset: 2px;
 }
 
-/* Breadcrumbs */
 .breadcrumbs {
   display: flex;
   align-items: center;
@@ -204,7 +185,6 @@ body {
   text-decoration: underline;
 }
 
-/* Mobile Nav Styles */
 .nav-toggle {
   display: none;
   background: none;
@@ -215,19 +195,13 @@ body {
 
 @media (max-width: 768px) {
   .nav-menu {
-    display: none; /* In a real app we'd toggle this or use a fixed mobile menu */
+    display: none;
   }
   .nav-toggle {
     display: block;
   }
 }
 
-/* 
-  Drill 4 - Content Layout Patterns
-  ===========================================
-*/
-
-/* Article Layout (Medium-style) */
 .article-layout {
   max-width: 70ch;
   margin: var(--space-5) auto;
@@ -244,11 +218,10 @@ body {
   font-size: 1.125rem;
 }
 
-/* Dashboard Layout (Sidebar + Main Content) */
 .dashboard-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
-  min-height: calc(100vh - 70px); /* header height approx */
+  min-height: calc(100vh - 70px);
 }
 
 .sidebar {
@@ -267,11 +240,10 @@ body {
     grid-template-columns: 1fr;
   }
   .sidebar {
-    display: none; /* mobile toggle would use JS or checkbox hack */
+    display: none;
   }
 }
 
-/* Magazine Layout (Mixed widths) */
 .magazine-layout {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -297,11 +269,6 @@ body {
   }
 }
 
-/* 
-  Drill 5 - Component Composition
-  ===========================================
-*/
-
 .section {
   padding: var(--space-5) 0;
 }
@@ -320,7 +287,6 @@ body {
   margin-bottom: var(--space-3);
 }
 
-/* Utility Classes for accessibility/visibility */
 .screen-reader-only {
   position: absolute;
   width: 1px;
