@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Task Notes</title>
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+<body class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+        <div class="flex items-center gap-2">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+            <span style="font-weight: 700; font-size: var(--fs-lg);">TaskNotes</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userAvatar">JD</div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">John Doe</span>
+                    <button class="user-logout" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+        <ul class="sidebar-nav">
+            <li>
+                <a href="#" class="sidebar-link active" data-filter="all">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    All Tasks
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link" data-filter="pending">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Pending
+                    <span id="pendingCount" class="badge badge-low" style="margin-left: auto;">0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="sidebar-link" data-filter="completed">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Completed
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-section-title">Priority</div>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="sidebar-link" data-filter="high"><svg viewBox="0 0 24 24" fill="none" stroke="var(--priority-high)" stroke-width="3"><circle cx="12" cy="12" r="6" fill="var(--priority-high)"/></svg> High Priority</a></li>
+            <li><a href="#" class="sidebar-link" data-filter="medium"><svg viewBox="0 0 24 24" fill="none" stroke="var(--priority-medium)" stroke-width="3"><circle cx="12" cy="12" r="6" fill="var(--priority-medium)"/></svg> Medium Priority</a></li>
+            <li><a href="#" class="sidebar-link" data-filter="low"><svg viewBox="0 0 24 24" fill="none" stroke="var(--priority-low)" stroke-width="3"><circle cx="12" cy="12" r="6" fill="var(--priority-low)"/></svg> Low Priority</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+        <div class="page-header">
+            <div class="page-intro">
+                <h1 id="greetingTitle">Good afternoon, John</h1>
+                <p>Welcome back! Let's get things done today.</p>
+            </div>
+            <button class="btn btn-primary" id="openTaskForm">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New Task
+            </button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="searchInput" class="form-input search-input" placeholder="Search tasks...">
+        </div>
+
+        <!-- Task List -->
+        <div id="taskList" class="task-list">
+            <!-- Skeleton Loading -->
+            <div class="task-card" style="height: 200px; background-color: var(--bg-color); animation: pulse 1.5s infinite;"></div>
+            <div class="task-card" style="height: 200px; background-color: var(--bg-color); animation: pulse 1.5s infinite;"></div>
+            <div class="task-card" style="height: 200px; background-color: var(--bg-color); animation: pulse 1.5s infinite;"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" style="display: none; text-align: center; padding: 5rem 2rem;">
+            <div style="font-size: 4rem; margin-bottom: 1.5rem;">📋</div>
+            <h3 style="margin-bottom: 0.5rem;">No tasks found</h3>
+            <p>Ready to start? Create your first task to see it here.</p>
+            <button class="btn btn-secondary mt-4" onclick="document.getElementById('openTaskForm').click()">Create Task</button>
+        </div>
+    </main>
+
+    <!-- Task Modal -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="modalTitle" style="margin-bottom: 0;">Create New Task</h3>
+                <button class="btn btn-ghost btn-icon" id="closeModal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <form id="taskForm">
+                <input type="hidden" id="taskId">
+                <div class="form-group">
+                    <label for="taskTitleInput" class="form-label">Title</label>
+                    <input type="text" id="taskTitleInput" class="form-input" placeholder="What needs to be done?" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescInput" class="form-label">Description</label>
+                    <textarea id="taskDescInput" class="form-input" style="min-height: 100px; resize: vertical;" placeholder="Add some details..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskPriorityInput" class="form-label">Priority</label>
+                    <select id="taskPriorityInput" class="form-input">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div class="flex justify-center gap-3 mt-8">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" id="cancelTask">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;" id="saveTaskBtn">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    .loading-spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    </style>
+
+    <script type="module" src="scripts/app.js"></script>
+</body>
+</html>

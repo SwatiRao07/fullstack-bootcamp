@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tailwind practise</title>
+  <link rel="stylesheet" href="../dist/tailwind.css">
+</head>
+<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
+
+    <header class="flex items-center justify-between p-4 bg-brand text-white shadow-md">
+      <h1 class="text-2xl text-black font-bold">My Page</h1>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="px-4 py-2 bg-white text-black rounded hover:bg-gray-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-black">Theme</button>
+      </div>
+    </header>
+
+    <nav class="bg-gray-100 dark:bg-gray-800 p-4 sticky top-0 z-10 shadow-sm">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <h2 class="hidden md:block font-bold">Navigation</h2>
+        <ul class="flex flex-wrap gap-4 list-none m-0 p-0">
+          <li><a href="#article" class="text-brand dark:text-brand font-medium hover:underline focus-visible:ring-2 focus-visible:ring-brand">Article</a></li>
+          <li><a href="#movies" class="text-brand dark:text-brand font-medium hover:underline focus-visible:ring-2 focus-visible:ring-brand">Movies</a></li>
+          <li><a href="#books" class="text-brand dark:text-brand font-medium hover:underline focus-visible:ring-2 focus-visible:ring-brand">Books</a></li>
+          <li><a href="#table" class="text-brand dark:text-brand font-medium hover:underline focus-visible:ring-2 focus-visible:ring-brand">Table</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-[1fr_300px] gap-8">
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-6">
+        <section class="hero bg-brand/10 p-8 rounded-lg border-l-4 border-brand col-span-full">
+          <h2 class="text-3xl font-bold mb-4">Welcome</h2>
+          <p class="text-lg">This page demonstrates semantic HTML, CSS variables, responsive units, and CSS Grid with Tailwind utilities.</p>
+        </section>
+
+        <article id="article" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-transform hover:scale-[1.01] flex flex-col gap-4">
+          <h2 class="text-2xl font-bold">About This Page</h2>
+          <p>This is a sample article demonstrating proper semantic structure, themed with CSS variables, and laid out using CSS Grid.</p>
+          <p>Resize the browser window to see the responsive layout in action.</p>
+          <img src="https://picsum.photos/800/400" alt="Scenic photo" class="rounded-lg shadow-md w-full object-cover aspect-video" />
+        </article>
+
+        <section id="books" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col gap-4">
+          <h2 class="text-2xl font-bold">Favourite Books</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>The Alchemist</li>
+            <li>Atomic Habits</li>
+            <li>Deep Work</li>
+            <li>1984</li>
+            <li>Sapiens</li>
+          </ol>
+        </section>
+
+        <section id="table" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg col-span-full overflow-x-auto">
+          <h2 class="text-2xl font-bold mb-4">Reading List</h2>
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+              <tr>
+                <th scope="col" class="p-3 border-b">Title</th>
+                <th scope="col" class="p-3 border-b">Author</th>
+                <th scope="col" class="p-3 border-b">Year</th>
+                <th scope="col" class="p-3 border-b">Genre</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+              <tr>
+                <th scope="row" class="p-3 font-normal italic">The Alchemist</th>
+                <td class="p-3">Paulo Coelho</td>
+                <td class="p-3">1988</td>
+                <td class="p-3">Fiction</td>
+              </tr>
+        
+              <tr>
+                <th scope="row" class="p-3 font-normal italic">1984</th>
+                <td class="p-3">George Orwell</td>
+                <td class="p-3">1949</td>
+                <td class="p-3">Dystopian</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <aside class="flex flex-col gap-6">
+        <div class="bg-brand/5 dark:bg-brand/10 p-6 rounded-lg border border-brand/20">
+          <h2 class="text-xl font-bold mb-2">Did You Know?</h2>
+          <p>CSS Grid named areas make complex layouts much easier to manage and reflow on smaller screens.</p>
+        </div>
+        <div class="bg-brand/5 dark:bg-brand/10 p-6 rounded-lg border border-brand/20">
+          <h2 class="text-xl font-bold mb-2">Tip</h2>
+          <p>Using <code>clamp()</code> for font sizes removes the need for multiple media query breakpoints just for typography.</p>
+        </div>
+        <div class="bg-brand/5 dark:bg-brand/10 p-6 rounded-lg border border-brand/20 italic">
+          <h2 class="text-xl font-bold mb-2">Quote</h2>
+          <blockquote>"Good design is as little design as possible." — Dieter Rams</blockquote>
+        </div>
+      </aside>
+
+    </main>
+
+    <footer class="p-8 mt-12 text-center bg-gray-900 text-gray-400 border-t border-gray-800">
+      <p>&copy; 2026 My Page.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+
+</body>
+</html>

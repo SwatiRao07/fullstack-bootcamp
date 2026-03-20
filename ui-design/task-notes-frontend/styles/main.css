@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+/* Typography & Reset Fixes */
+:root {
+  --header-height: 72px;
+  --sidebar-width: 250px;
+  
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.875rem;
+  --fs-3xl: 2.25rem;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font-size: var(--fs-3xl); font-weight: 800; letter-spacing: -0.025em; color: hsl(var(--primary-h), 30%, 15%); }
+[data-theme="dark"] h1 { color: #fff; }
+
+h2 { font-size: var(--fs-2xl); font-weight: 700; }
+h3 { font-size: var(--fs-xl); font-weight: 600; }
+
+/* App Layout Grid */
+.app-layout {
+  display: grid;
+  grid-template-areas: 
+    "header header"
+    "sidebar main";
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+  min-height: 100vh;
+}
+
+.app-header {
+  grid-area: header;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+[data-theme="dark"] .app-header {
+  background-color: hsla(222, 47%, 7%, 0.8);
+}
+
+.app-sidebar {
+  grid-area: sidebar;
+  background-color: var(--surface-color);
+  border-right: 1px solid var(--border-color);
+  padding: 1.5rem 0.75rem;
+}
+
+.app-main {
+  grid-area: main;
+  padding: 3rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Page Intro Section */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.page-intro h1 {
+  margin-bottom: 0.5rem;
+}
+
+.page-intro p {
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+
+/* Task List Grid */
+.task-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2rem;
+}
+
+/* Search Bar Wrapper */
+.search-wrapper {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  padding-left: 3.5rem !important;
+  height: 50px;
+  font-size: 1rem !important;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Utilities */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+/* Auth Split Screen Layout */
+.auth-split-layout {
+  display: flex;
+  height: 100vh;
+  background-color: var(--surface-color);
+  overflow: hidden;
+}
+
+.auth-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: var(--surface-color);
+}
+
+.auth-content {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-brand-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.image-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-side-content {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-visual-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile Responsive Split */
+@media (max-width: 1024px) {
+  .image-side {
+    display: none;
+  }
+}
+
+/* App Layout Mobile Responsive */
+@media (max-width: 768px) {
+  .app-layout {
+    grid-template-areas: 
+      "header"
+      "main";
+    grid-template-columns: 1fr;
+  }
+  
+  .app-sidebar {
+    display: none;
+  }
+}
+
+.mb-12 { margin-bottom: 2rem; }
+.mb-6 { margin-bottom: 1.25rem; }
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

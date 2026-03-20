@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  :root {
+    --bg: oklch(0.98 0.01 255);
+    --text: oklch(0.21 0.02 255);
+  }
+
+  .dark {
+    --bg: oklch(0.12 0.02 255);
+    --text: oklch(0.93 0.01 255);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: all 300ms;
+  }
+}

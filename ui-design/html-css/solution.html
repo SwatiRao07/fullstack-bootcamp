@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML-CSS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="layout">
+
+    <header>
+      <h1>My Page</h1>
+      <button id="theme-toggle">Theme</button>
+    </header>
+
+    <nav>
+      <h2>Navigation</h2>
+      <ul>
+        <li><a href="#article">Article</a></li>
+        <li><a href="#movies">Movies</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#table">Table</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <h2>Welcome</h2>
+        <p>This page demonstrates semantic HTML, CSS variables, responsive units, and CSS Grid.</p>
+      </section>
+
+      <article id="article">
+        <h2>About This Page</h2>
+        <p>This is a sample article demonstrating proper semantic structure, themed with CSS variables, and laid out using CSS Grid.</p>
+        <p>Resize the browser window to see the responsive layout in action.</p>
+
+        <img src="https://picsum.photos/800/400" alt="A random scenic photo from Picsum Photos" />
+      </article>
+
+      <section id="movies">
+        <h2>Favourite Movies</h2>
+        <ol>
+          <li>The Shawshank Redemption</li>
+          <li>Interstellar</li>
+          <li>The Dark Knight</li>
+          <li>Inception</li>
+          <li>Forrest Gump</li>
+        </ol>
+      </section>
+
+      <section id="books">
+        <h2>Favourite Books</h2>
+        <ul>
+          <li>The Alchemist</li>
+          <li>Atomic Habits</li>
+          <li>Deep Work</li>
+          <li>1984</li>
+          <li>Sapiens</li>
+        </ul>
+      </section>
+
+      <section id="table">
+        <h2>Reading List</h2>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Year</th>
+              <th scope="col">Genre</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">The Alchemist</th>
+              <td>Paulo Coelho</td>
+              <td>1988</td>
+              <td>Fiction</td>
+            </tr>
+            <tr>
+              <th scope="row">Atomic Habits</th>
+              <td>James Clear</td>
+              <td>2018</td>
+              <td>Self-help</td>
+            </tr>
+            <tr>
+              <th scope="row">Deep Work</th>
+              <td>Cal Newport</td>
+              <td>2016</td>
+              <td>Productivity</td>
+            </tr>
+            <tr>
+              <th scope="row">1984</th>
+              <td>George Orwell</td>
+              <td>1949</td>
+              <td>Dystopian</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+    <aside>
+      <h2>Did You Know?</h2>
+      <p>CSS Grid named areas make complex layouts much easier to manage and reflow on smaller screens.</p>
+      <h2>Tip</h2>
+      <p>Using <code>clamp()</code> for font sizes removes the need for multiple media query breakpoints just for typography.</p>
+      <h2>Quote</h2>
+      <blockquote>"Good design is as little design as possible." — Dieter Rams</blockquote>
+    </aside>
+
+    <footer>
+      <p>&copy; 2026 My Page. Built with semantic HTML, CSS variables, responsive units &amp; CSS Grid.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      const root = document.documentElement;
+      root.dataset.theme = root.dataset.theme === 'dark' ? '' : 'dark';
+    });
+  </script>
+
+</body>
+</html>

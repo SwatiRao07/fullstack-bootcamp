@@ -1,0 +1,334 @@
+/* 
+  Drill 1 - Spacing System & Layout Foundation
+  ===========================================
+*/
+
+:root {
+  /* Spacing Scale (4px base) */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 1rem;    /* 16px */
+  --space-4: 1.5rem;  /* 24px */
+  --space-5: 2rem;    /* 32px */
+  --space-6: 4rem;    /* 64px */
+
+  /* Colors Tokens */
+  --brand-primary: #3b82f6;
+  --brand-secondary: #2563eb;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --bg-main: #f9fafb;
+  --border-light: #e5e7eb;
+  --white: #ffffff;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: var(--text-main);
+  background-color: var(--bg-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Drill 1 - Skeleton */
+.header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+  padding: var(--space-3) var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.footer {
+  background: var(--text-main);
+  color: var(--white);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* 
+  Drill 2 - Reusable Card Component
+  ===========================================
+*/
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.grid--cards {
+  /* repeat(auto-fit, minmax(220px, 1fr)) */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  padding: var(--space-4) 0;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--space-2);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.card--elevated {
+  box-shadow: var(--shadow-md);
+}
+
+.card--elevated:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card--outlined {
+  border: 1px solid var(--border-light);
+}
+
+.card--compact {
+  padding: var(--space-2);
+  gap: var(--space-1);
+}
+
+.card__image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: calc(var(--space-2) / 2);
+}
+
+.card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.card__text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* 
+  Drill 3 - Navigation Patterns
+  ===========================================
+*/
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+
+/* Horizontal Nav with Mobile Toggle */
+.nav-menu {
+  display: flex;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--space-1);
+}
+
+.nav-link:hover {
+  color: var(--brand-primary);
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.breadcrumb-item::after {
+  content: '/';
+  margin-left: var(--space-2);
+}
+
+.breadcrumb-item:last-child::after {
+  content: '';
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Nav Styles */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none; /* In a real app we'd toggle this or use a fixed mobile menu */
+  }
+  .nav-toggle {
+    display: block;
+  }
+}
+
+/* 
+  Drill 4 - Content Layout Patterns
+  ===========================================
+*/
+
+/* Article Layout (Medium-style) */
+.article-layout {
+  max-width: 70ch;
+  margin: var(--space-5) auto;
+  padding: 0 var(--space-4);
+}
+
+.article-layout h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-3);
+}
+
+.article-layout p {
+  margin-bottom: var(--space-4);
+  font-size: 1.125rem;
+}
+
+/* Dashboard Layout (Sidebar + Main Content) */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 70px); /* header height approx */
+}
+
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--border-light);
+  padding: var(--space-4);
+}
+
+.dashboard-content {
+  padding: var(--space-5);
+  background: var(--bg-main);
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none; /* mobile toggle would use JS or checkbox hack */
+  }
+}
+
+/* Magazine Layout (Mixed widths) */
+.magazine-layout {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.magazine-feature {
+  grid-column: span 8;
+}
+
+.magazine-side {
+  grid-column: span 4;
+}
+
+.magazine-triplet {
+  grid-column: span 4;
+}
+
+@media (max-width: 992px) {
+  .magazine-feature, .magazine-side, .magazine-triplet {
+    grid-column: span 12;
+  }
+}
+
+/* 
+  Drill 5 - Component Composition
+  ===========================================
+*/
+
+.section {
+  padding: var(--space-5) 0;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  color: var(--white);
+  padding: var(--space-6) 0;
+  text-align: center;
+  border-radius: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: var(--space-3);
+}
+
+/* Utility Classes for accessibility/visibility */
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

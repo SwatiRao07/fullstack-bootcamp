@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography & Layout Mastery</title>
+    <!-- Google Fonts: Inter (Variable), Merriweather (Serif), Source Code Pro (Monospace) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.dataset.theme;
+                document.documentElement.dataset.theme = currentTheme === 'dark' ? '' : 'dark';
+            });
+
+            // Variable font weight slider logic
+            const slider = document.getElementById('weight-slider');
+            const variableText = document.querySelector('.variable-weight-text');
+            if (slider && variableText) {
+                slider.addEventListener('input', (e) => {
+                    variableText.style.setProperty('--current-weight', e.target.value);
+                });
+            }
+        });
+    </script>
+</head>
+<body class="layout">
+    <header>
+        <h1 class="hero-title">Typography Practise</h1>
+        <button id="theme-toggle" aria-label="Toggle dark mode">Toggle Theme</button>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#hero">Typography Hero</a></li>
+            <li><a href="#lists">Hierarchy & Scale</a></li>
+            <li><a href="#code">Code & Emphasis</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h2>Variable Font Weight Demo</h2>
+                <div class="control-panel">
+                    <label for="weight-slider">Weight Slider (Inter Variable):</label>
+                    <input type="range" id="weight-slider" min="100" max="900" value="400">
+                </div>
+                <p class="variable-weight-text">This paragraph demonstrates the Inter variable font axis. Drag the slider to adjust its weight fluidly without layout shift.</p>
+                <img src="https://picsum.photos/800/400" alt="Beautiful landscape" width="800" height="400">
+            </div>
+        </section>
+
+        <article id="lists">
+            <h2>Drill 1: System Weights Demo</h2>
+            <div class="weights-grid">
+                <p class="w-400">Normal Weight (400) - Readable and balanced.</p>
+                <p class="w-600">Semi-Bold Weight (600) - Clear distinction.</p>
+                <p class="w-800">Extra-Bold Weight (800) - High emphasis.</p>
+            </div>
+
+            <h2>Recommended Media</h2>
+            <h3>Top Movies (Ordered)</h3>
+            <ol>
+                <li>Inception</li>
+                <li>The Matrix</li>
+                <li>Interstellar</li>
+                <li>Parasite</li>
+            </ol>
+
+            <h3>Essential Books (Unordered)</h3>
+            <ul>
+                <li>Clean Code by Robert C. Martin</li>
+                <li>The Pragmatic Programmer</li>
+                <li>You Don't Know JS</li>
+                <li>Refactoring by Martin Fowler</li>
+            </ul>
+        </article>
+
+        <section id="code">
+            <h2>Drill 5: Code & Quotes</h2>
+            <pre><code>function typographyDrill() {
+  const stack = "System -> Google -> Local";
+  console.log(`Hello ${name}`);
+}</code></pre>
+
+            <blockquote>
+                "Typography is the hidden engine of great design. When it works, you don't even notice it's there."
+            </blockquote>
+
+            <table>
+                <caption>Font Loading Comparison</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Strategy</th>
+                        <th scope="col">Perf</th>
+                        <th scope="col">Flexibility</th>
+                        <th scope="col">Ease</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">System Stack</th>
+                        <td>Best</td>
+                        <td>Low</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Google Fonts</th>
+                        <td>Good</td>
+                        <td>High</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Local Fonts</th>
+                        <td>Great</td>
+                        <td>Highest</td>
+                        <td>Medium</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <aside>
+        <h3>Typographic Scale</h3>
+        <h1>H1 Scale</h1>
+        <h2>H2 Scale</h2>
+        <h3>H3 Scale</h3>
+        <h4>H4 Scale</h4>
+        <h5>H5 Scale</h5>
+        <h6>H6 Scale</h6>
+    </aside>
+
+    <footer>
+        <p>&copy; All rights reserved.</p>
+    </footer>
+</body>
+</html>

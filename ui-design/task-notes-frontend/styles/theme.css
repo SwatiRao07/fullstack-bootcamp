@@ -1,0 +1,62 @@
+:root {
+  /* Premium Palette (Inter-inspired vibrant indigo) */
+  --primary-h: 245;
+  --primary-s: 75%;
+  --primary-l: 60%;
+  --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+  --primary-hover: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 5%));
+  --primary-light: hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.1);
+  
+  --bg-color: hsl(220, 33%, 98%);
+  --surface-color: #ffffff;
+  --text-color: hsl(220, 25%, 15%);
+  --text-muted: hsl(220, 10%, 45%);
+  --border-color: hsl(220, 15%, 92%);
+  --input-bg: #ffffff;
+  
+  /* Status Colors - More vibrant */
+  --success: hsl(150, 70%, 40%);
+  --danger: hsl(0, 80%, 55%);
+  --warning: hsl(35, 100%, 50%);
+  --info: hsl(200, 90%, 45%);
+  
+  /* Priority Levels */
+  --priority-low: var(--success);
+  --priority-medium: var(--warning);
+  --priority-high: var(--danger);
+  
+  /* Spacing System */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  
+  /* Premium Shadows - Multi-layered */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05), 0 12px 24px rgba(0, 0, 0, 0.05);
+  
+  /* Transitions */
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg-color: hsl(222, 47%, 7%);
+  --surface-color: hsl(222, 47%, 11%);
+  --text-color: hsl(210, 40%, 98%);
+  --text-muted: hsl(215, 20%, 65%);
+  --border-color: hsl(222, 30%, 18%);
+  --input-bg: hsl(222, 47%, 9%);
+  
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout Drills | Spacing, Cards, Nav, and Content</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Drill 1: Header / Drill 3: Navigation -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="#" class="nav-brand">LayoutLab</a>
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="#article" class="nav-link">Article</a></li>
+          <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+          <li><a href="#magazine" class="nav-link">Magazine</a></li>
+          <li><a href="#composition" class="nav-link">Full Composition</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Drill 3: Breadcrumbs -->
+    <div class="container" style="padding-top: var(--space-4);">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumbs">
+          <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Home</a></li>
+          <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Gallery</a></li>
+          <li class="breadcrumb-item" aria-current="page">Layout Drills</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Drill 5: Hero Section -->
+    <section id="composition" class="section">
+      <div class="container">
+        <div class="hero">
+          <h2>Master Modern Layouts</h2>
+          <p>A comprehensive showcase of spacing, composition, and responsive patterns.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Drill 2 & 5: Card Grid / Feature Grid -->
+    <section class="section">
+      <div class="container">
+        <h2 style="margin-bottom: var(--space-4);">Drill 2 — Reusable Card Component</h2>
+        <div class="grid grid--cards">
+          <!-- Card Elevated -->
+          <article class="card card--elevated">
+            <img src="https://picsum.photos/seed/elevated/400/225" alt="" class="card__image">
+            <h3 class="card__title">Elevated Card</h3>
+            <p class="card__text">Detailed description of this feature with standard elevation and hover effects.</p>
+            <button class="nav-link" style="margin-top:auto; color: var(--brand-primary);">Learn More &rarr;</button>
+          </article>
+
+          <!-- Card Outlined -->
+          <article class="card card--outlined">
+            <img src="https://picsum.photos/seed/outlined/400/225" alt="" class="card__image">
+            <h3 class="card__title">Outlined Card</h3>
+            <p class="card__text">Subtle border contrast, ideal for secondary information and clean looks.</p>
+            <button class="nav-link" style="margin-top:auto; color: var(--brand-primary);">Learn More &rarr;</button>
+          </article>
+
+          <!-- Card Compact -->
+          <article class="card card--compact card--outlined">
+            <h3 class="card__title">Compact Card</h3>
+            <p class="card__text">Minimal padding for dense layouts like sidebars or dashboards.</p>
+            <button class="nav-link" style="margin-top:auto; color: var(--brand-primary); font-size: 0.8rem;">Small Action</button>
+          </article>
+
+           <!-- Card with more text to test alignment -->
+           <article class="card card--elevated">
+            <img src="https://picsum.photos/seed/text/400/225" alt="" class="card__image">
+            <h3 class="card__title">Test Content Length</h3>
+            <p class="card__text">Testing how cards align when they have significantly more content than their siblings in the same row. This should stay aligned properly.</p>
+            <button class="nav-link" style="margin-top:auto; color: var(--brand-primary);">Learn More &rarr;</button>
+          </article>
+
+          <article class="card card--outlined">
+            <img src="https://picsum.photos/seed/minimal/400/225" alt="" class="card__image">
+            <h3 class="card__title">Minimal</h3>
+            <p class="card__text">Quick text.</p>
+            <button class="nav-link" style="margin-top:auto; color: var(--brand-primary);">Learn More &rarr;</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Drill 4: Article Layout -->
+    <section id="article" class="section" style="background: var(--white); border-top: 1px solid var(--border-light);">
+      <h2 class="container" style="margin-bottom: var(--space-4);">Drill 4 — Article Layout (Medium-style)</h2>
+      <article class="article-layout">
+        <h1>The Art of Simple Layouts</h1>
+        <p>Creating readable content is the cornerstone of web design. By limiting line lengths to between 60–75 characters, we ensure the reader doesn't lose their place while scanning from the end of one line to the start of the next.</p>
+        <p>This layout uses a max-width of 70ch (characters) and center alignment, providing a distraction-free reading experience that mirrors high-quality editorial content.</p>
+        <p>Optimal spacing between paragraphs (vertical rhythm) further enhances the reading experience, allowing the eye to rest and process information in digestible chunks.</p>
+      </article>
+    </section>
+
+    <!-- Drill 4: Dashboard Layout -->
+    <section id="dashboard" class="section">
+      <h2 class="container" style="margin-bottom: var(--space-4);">Drill 4 — Dashboard Layout (Sidebar + Main)</h2>
+      <div class="dashboard-layout">
+        <aside class="sidebar">
+          <nav>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-3);">
+              <li><a href="#" class="nav-link">Overview</a></li>
+              <li><a href="#" class="nav-link">Analytics</a></li>
+              <li><a href="#" class="nav-link">Reports</a></li>
+              <li><a href="#" class="nav-link">Settings</a></li>
+            </ul>
+          </nav>
+        </aside>
+        <div class="dashboard-content">
+          <h3>Main Content Area</h3>
+          <p>This area spans the remaining width and adapts as the viewport changes.</p>
+          <div class="grid grid--cards" style="margin-top: var(--space-4);">
+             <div class="card card--outlined">Stat 1: 1,200</div>
+             <div class="card card--outlined">Stat 2: 450</div>
+             <div class="card card--outlined">Stat 3: 88%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Drill 4: Magazine Layout -->
+    <section id="magazine" class="section" style="background: var(--white);">
+      <h2 class="container" style="margin-bottom: var(--space-4);">Drill 4 — Magazine Layout (Mixed Widths)</h2>
+      <div class="container">
+        <div class="magazine-layout">
+          <div class="magazine-feature">
+            <div class="card card--elevated" style="height: 100%;">
+              <img src="https://picsum.photos/seed/feature/800/450" alt="" class="card__image">
+              <h3 class="card__title">Feature Story</h3>
+              <p class="card__text">A dominant feature story that takes up 8 columns of our 12-column grid system.</p>
+            </div>
+          </div>
+          <div class="magazine-side">
+            <div class="card card--outlined" style="height: 100%;">
+              <h3 class="card__title">Latest News</h3>
+              <p class="card__text">Sidebar content taking 4 columns.</p>
+              <hr style="margin: var(--space-2) 0; border: 0; border-top: 1px solid var(--border-light);">
+              <p class="card__text">Quick updates and smaller headlines go here.</p>
+            </div>
+          </div>
+          <div class="magazine-triplet">
+            <div class="card card--outlined">Small Bit 1</div>
+          </div>
+          <div class="magazine-triplet">
+            <div class="card card--outlined">Small Bit 2</div>
+          </div>
+          <div class="magazine-triplet">
+            <div class="card card--outlined">Small Bit 3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Drill 1 & 5: Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="magazine-layout" style="text-align: left; margin-bottom: var(--space-4);">
+        <div class="magazine-triplet">
+          <h4 style="margin-bottom: var(--space-2);">Product</h4>
+          <ul style="list-style: none; font-size: 0.9rem;">
+            <li>Features</li>
+            <li>Integrations</li>
+            <li>Pricing</li>
+          </ul>
+        </div>
+        <div class="magazine-triplet">
+          <h4 style="margin-bottom: var(--space-2);">Resources</h4>
+          <ul style="list-style: none; font-size: 0.9rem;">
+            <li>Documentation</li>
+            <li>Tutorials</li>
+            <li>Blog</li>
+          </ul>
+        </div>
+        <div class="magazine-triplet">
+          <h4 style="margin-bottom: var(--space-2);">Legal</h4>
+          <ul style="list-style: none; font-size: 0.9rem;">
+            <li>Privacy</li>
+            <li>Terms</li>
+            <li>License</li>
+          </ul>
+        </div>
+      </div>
+      <p style="opacity: 0.7; font-size: 0.8rem;">&copy; 2026 LayoutLab. Built with Spacing, BEM, and CSS Grid Drills.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
