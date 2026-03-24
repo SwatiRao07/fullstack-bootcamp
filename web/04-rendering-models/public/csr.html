@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSR - Product Page</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="csr">
+    <div class="container">
+        <h1>CSR: Client-Side Rendering</h1>
+        <p class="description">This page is a minimal HTML shell. Data is fetched on load.</p>
+        
+
+        <div id="app">
+            <p>Waiting for data from API...</p>
+        </div>
+
+        <a href="/">Back to Home</a>
+    </div>
+
+    <script>
+        const app = document.getElementById('app');
+        fetch('/api/product')
+            .then(res => res.json())
+            .then(product => {
+                app.innerHTML = `
+                    <div class="product-card">
+                        <h2>${product.name}</h2>
+                        <p class="price">Price: <span>${product.price}</span></p>
+                        <p class="stock">In Stock: <span>${product.stock}</span></p>
+                        <button id="add-to-cart" class="btn">Add to Cart</button>
+                    </div>
+                `;
+                
+
+                document.getElementById('add-to-cart').addEventListener('click', () => {
+                    alert('Added ' + product.name + ' to cart!');
+                });
+            })
+            .catch(error => {
+                app.innerHTML = `<p>Error loading product: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>

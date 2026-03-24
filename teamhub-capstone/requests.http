@@ -1,0 +1,40 @@
+###
+
+###
+GET http://localhost:3000/health
+
+###
+GET http://localhost:3000/api/projects
+
+###
+GET http://localhost:3000/api/projects/p1
+
+###
+GET http://localhost:3000/api/projects/p99
+
+###
+GET http://localhost:3000/api/articles
+
+###
+GET http://localhost:3000/api/articles/a1
+
+###
+GET http://localhost:3000/api/articles/a99
+
+###
+GET http://localhost:3000/api/team
+
+###
+GET http://localhost:3000/people
+
+###
+GET http://localhost:3000/set-theme
+
+###
+GET http://localhost:3000/projects/csr
+
+###
+GET http://localhost:3000/projects/ssr
+
+###
+GET http://localhost:3000/projects/static.html
