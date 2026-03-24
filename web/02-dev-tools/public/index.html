@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Express Debug Lab</title>
+    <style>
+        #user-card { border: 2px solid #ccc; padding: 20px; margin-top: 20px; border-radius: 5px; }
+        .loading { opacity: 0.5; }
+        .error { color: red; border-color: red; }
+    </style>
+</head>
+<body>
+    <button id="load">Load Profile</button>
+    <button id="fail">Force 500 Error</button>
+    <button id="clear">Clear State</button>
+
+    <div id="user-card">
+        <div id="output">No data.</div>
+        <small id="trace" style="display:block; margin-top:10px; color:gray;"></small>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const traceDisplay = document.getElementById('trace');
+        const card = document.getElementById('user-card');
+
+        async function fetchData(url) {
+            output.innerText = "Loading...";
+            card.className = 'loading';
+
+            try {
+                const response = await fetch(url);
+                
+                const traceId = response.headers.get('X-Debug-Trace');
+                traceDisplay.innerText = `Header Trace: ${traceId}`;
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.error);
+
+                output.innerText = `${data.name} - ${data.email}`;
+                card.className = '';
+                localStorage.setItem('last_user_fetch', new Date().toISOString());
+
+            } catch (err) {
+                output.innerText = `Error: ${err.message}`;
+                card.className = 'error';
+            }
+        }
+
+        document.getElementById('load').onclick = () => fetchData('/api/user');
+        document.getElementById('fail').onclick = () => fetchData('/api/user?fail=1');
+        document.getElementById('clear').onclick = () => {
+            output.innerText = "No data.";
+            traceDisplay.innerText = "";
+            card.className = "";
+            localStorage.removeItem('last_user_fetch');
+        };
+    </script>
+</body>
+</html>

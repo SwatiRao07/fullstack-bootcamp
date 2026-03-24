@@ -1,0 +1,11 @@
+### Get API Status
+
+GET http://localhost:4000/api/status
+Content-Type: application/json
+
+###
+
+### Test Missing Route (404)
+
+GET http://localhost:4000/api/missing
+Content-Type: application/json

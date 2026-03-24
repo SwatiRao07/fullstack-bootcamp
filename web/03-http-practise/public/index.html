@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <h2>User Dashboard</h2>
+  <button id="fetchUser">Load User 1</button>
+  
+  <div id="display">
+    <p id="userName"></p>
+    <p id="errorText" style="color: red;"></p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('fetchUser');
+    const nameDisplay = document.getElementById('userName');
+    const errorDisplay = document.getElementById('errorText');
+
+    btn.addEventListener('click', async () => {
+      // Clear previous state
+      nameDisplay.textContent = '';
+      errorDisplay.textContent = '';
+
+      try {
+        const response = await fetch('/users/1');
+
+        if (!response.ok) {
+          // Handle 404 or other non-OK status codes
+          const errData = await response.json();
+          throw new Error(errData.error || 'Failed to fetch user');
+        }
+
+        const user = await response.json();
+        nameDisplay.textContent = `User Name: ${user.name}`;
+      } catch (err) {
+        errorDisplay.textContent = `Error: ${err.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
